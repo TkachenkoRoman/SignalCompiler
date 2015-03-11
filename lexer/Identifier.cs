@@ -15,7 +15,7 @@ namespace lexer
             id = 401;
             type = identifierType.user;
         }
-        public Identifier(string name, int id, identifierType type)
+        public Identifier(string name, identifierType type, int id = 401)
         {
             this.name = name;
             this.id = id;

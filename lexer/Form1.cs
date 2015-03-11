@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace lexer
 {
@@ -25,7 +26,11 @@ namespace lexer
 
             LexicalAnalizer lexer = new LexicalAnalizer();
             string path = System.IO.Directory.GetCurrentDirectory() + @"\test.txt";
-            lexer.Analize(path);
+            List<LexicalAnalizerOutput> result = lexer.Analize(path);
+            foreach (var item in result)
+            {
+                Debug.Print("Lexem: {0}\tCode: {1}", item.lexem, item.code);
+            }
         }
     }
 }

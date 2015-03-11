@@ -13,7 +13,7 @@ namespace lexer
             value = 0;
             id = 501;
         }
-        public Constant(int value, int id)
+        public Constant(int value, int id = 501)
         {
             this.value = value;
             this.id = id;

@@ -9,19 +9,9 @@ using System.IO;
 
 namespace lexer
 {
-    enum attrType { whitespace, constant, identifier, oneSymbDelimiter, manySymbDelimiter, begCom, invalid };
     class SerializeTables
     {
-        public static Dictionary<attrType, int> attributesTypes = new Dictionary<attrType, int>
-        {
-            { attrType.whitespace, 0 },
-            { attrType.constant, 1},
-            { attrType.identifier, 2},
-            { attrType.oneSymbDelimiter, 3},
-            { attrType.manySymbDelimiter, 4},
-            { attrType.begCom, 5},
-            { attrType.invalid, 6}
-        };
+        
         private static string path = System.IO.Directory.GetCurrentDirectory();
         private static string attributesTablePath = path + @"\AttributesTable.xml";
         private static string keyWordsTablePath = path + @"\KeyWordsTable.xml";
@@ -64,7 +54,7 @@ namespace lexer
 
             char[] letters = GenerateCharArray('A', 'Z');
 
-            char[] delimiters = new char[] { ';', '.', ':', '=', '*', ')'};
+            char[] delimiters = new char[] { ';', '.', ':', '='};
 
             char[] begCom = new char[] { '(' };
 
@@ -75,17 +65,17 @@ namespace lexer
                 attributes.symbol = Convert.ToChar(i); // convert ascii to char
 
                 if (whitespaces.Contains(attributes.symbol))
-                    attributes.type = attributesTypes[attrType.whitespace];
+                    attributes.type = LexicalAnalizer.attributesTypes[attrType.whitespace];
                 else if (constants.Contains(attributes.symbol))
-                    attributes.type = attributesTypes[attrType.constant];
+                    attributes.type = LexicalAnalizer.attributesTypes[attrType.constant];
                 else if (letters.Contains(attributes.symbol))
-                    attributes.type = attributesTypes[attrType.identifier];
+                    attributes.type = LexicalAnalizer.attributesTypes[attrType.identifier];
                 else if (delimiters.Contains(attributes.symbol))
-                    attributes.type = attributesTypes[attrType.oneSymbDelimiter];
+                    attributes.type = LexicalAnalizer.attributesTypes[attrType.oneSymbDelimiter];
                 else if (begCom.Contains(attributes.symbol))
-                    attributes.type = attributesTypes[attrType.begCom];
+                    attributes.type = LexicalAnalizer.attributesTypes[attrType.begCom];
                 else
-                    attributes.type = attributesTypes[attrType.invalid];
+                    attributes.type = LexicalAnalizer.attributesTypes[attrType.invalid];
 
                 listAttributes.Add(attributes);
             }
@@ -101,10 +91,10 @@ namespace lexer
             Debug.Print("\nAttributes deserialized.");
             foreach (var item in (List<Attributes>) obj)
             {
-                if (item.type != attributesTypes[attrType.invalid])
-                    Debug.Print("symbol: {0}    type: {1}", 
-                        (item.type == attributesTypes[attrType.whitespace]) ? "ascii " + Convert.ToInt32(item.symbol).ToString() : item.symbol.ToString(),
-                        attributesTypes.FirstOrDefault(x => x.Value == item.type).Key);
+                if (item.type != LexicalAnalizer.attributesTypes[attrType.invalid])
+                    Debug.Print("symbol: {0}    type: {1}",
+                        (item.type == LexicalAnalizer.attributesTypes[attrType.whitespace]) ? "ascii " + Convert.ToInt32(item.symbol).ToString() : item.symbol.ToString(),
+                        LexicalAnalizer.attributesTypes.FirstOrDefault(x => x.Value == item.type).Key);
             }
 
             return (List<Attributes>) obj;
@@ -148,7 +138,7 @@ namespace lexer
 
             foreach (var item in identifiers)
             {
-                Identifier identifier = new Identifier(item, id++, identifierType.system);
+                Identifier identifier = new Identifier(item, identifierType.system, id++);
                 identifiersList.Add(identifier);
             }
 
