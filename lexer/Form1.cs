@@ -15,8 +15,17 @@ namespace lexer
         public Form1()
         {
             InitializeComponent();
-            SerializeTables.SerializeAttributes();
-            SerializeTables.DeserializeAttributes();
+            //SerializeTables.SerializeAttributes();
+            //SerializeTables.SeriaizeKeyWords();
+            //SerializeTables.SeriaizeIdentifiers();
+
+            //SerializeTables.DeserializeAttributes();
+            //SerializeTables.DeserializeKeyWords();
+            //SerializeTables.DeserializeIdentifiers();
+
+            LexicalAnalizer lexer = new LexicalAnalizer();
+            string path = System.IO.Directory.GetCurrentDirectory() + @"\test.txt";
+            lexer.Analize(path);
         }
     }
 }

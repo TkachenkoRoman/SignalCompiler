@@ -24,6 +24,8 @@ namespace lexer
         };
         private static string path = System.IO.Directory.GetCurrentDirectory();
         private static string attributesTablePath = path + @"\AttributesTable.xml";
+        private static string keyWordsTablePath = path + @"\KeyWordsTable.xml";
+        private static string identifiersTablePath = path + @"\IdentifiersTable.xml";
         private static void Serialize(object obj, string path)
         {
             Type objectType = obj.GetType();
@@ -61,7 +63,11 @@ namespace lexer
             char[] constants = GenerateCharArray('0', '9'); // numbers 0..9
 
             char[] letters = GenerateCharArray('A', 'Z');
-                
+
+            char[] delimiters = new char[] { ';', '.', ':', '=', '*', ')'};
+
+            char[] begCom = new char[] { '(' };
+
             List<Attributes> listAttributes = new List<Attributes>();
             for (int i = 0; i < 255; i++)
             {
@@ -74,6 +80,10 @@ namespace lexer
                     attributes.type = attributesTypes[attrType.constant];
                 else if (letters.Contains(attributes.symbol))
                     attributes.type = attributesTypes[attrType.identifier];
+                else if (delimiters.Contains(attributes.symbol))
+                    attributes.type = attributesTypes[attrType.oneSymbDelimiter];
+                else if (begCom.Contains(attributes.symbol))
+                    attributes.type = attributesTypes[attrType.begCom];
                 else
                     attributes.type = attributesTypes[attrType.invalid];
 
@@ -87,7 +97,77 @@ namespace lexer
             List<Attributes> listAttributes = new List<Attributes>();
             object obj = (object) listAttributes;
             Deserialize(ref obj, attributesTablePath);
+
+            Debug.Print("\nAttributes deserialized.");
+            foreach (var item in (List<Attributes>) obj)
+            {
+                if (item.type != attributesTypes[attrType.invalid])
+                    Debug.Print("symbol: {0}    type: {1}", 
+                        (item.type == attributesTypes[attrType.whitespace]) ? "ascii " + Convert.ToInt32(item.symbol).ToString() : item.symbol.ToString(),
+                        attributesTypes.FirstOrDefault(x => x.Value == item.type).Key);
+            }
+
             return (List<Attributes>) obj;
+        }
+
+        public static void SeriaizeKeyWords()
+        {
+            string[] words = new string[] { "PROGRAM", "BEGIN", "END", "VAR", "IF", "THEN", "ELSE", "ENDIF" };
+            int id = 301;
+            List<KeyWord> keyWordsList = new List<KeyWord>();
+
+            foreach (var item in words)
+            {
+                KeyWord keyWord = new KeyWord(item, id++);
+                keyWordsList.Add(keyWord);
+            }
+
+            Serialize(keyWordsList, keyWordsTablePath);
+        }
+
+        public static List<KeyWord> DeserializeKeyWords()
+        {
+            List<KeyWord> keyWordsList = new List<KeyWord>();
+            object obj = (object)keyWordsList;
+            Deserialize(ref obj, keyWordsTablePath);
+
+            Debug.Print("\nKeyWords deserialized");
+            foreach (var item in (List<KeyWord>)obj)
+            {
+                Debug.Print("Keyword: {0}   id: {1}", item.keyWord, item.id.ToString());
+            }
+
+            return (List<KeyWord>)obj;
+        }
+
+        public static void SeriaizeIdentifiers()
+        {
+            string[] identifiers = new string[] { "INTEGER", "FLOAT" };
+            int id = 401;
+            List<Identifier> identifiersList = new List<Identifier>();
+
+            foreach (var item in identifiers)
+            {
+                Identifier identifier = new Identifier(item, id++, identifierType.system);
+                identifiersList.Add(identifier);
+            }
+
+            Serialize(identifiersList, identifiersTablePath);
+        }
+
+        public static List<Identifier> DeserializeIdentifiers()
+        {
+            List<Identifier> identifiersList = new List<Identifier>();
+            object obj = (object)identifiersList;
+            Deserialize(ref obj, identifiersTablePath);
+
+            Debug.Print("\nIdentifiers deserialized");
+            foreach (var item in (List<Identifier>)obj)
+            {
+                Debug.Print("Identifier: {0}   id: {1}  type: {2}", item.name, item.id.ToString(), item.type.ToString());
+            }
+
+            return (List<Identifier>)obj;
         }
     }
 }
