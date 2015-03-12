@@ -110,6 +110,7 @@ namespace lexer
                         {
                             j++;
                             errors.Add(new Error { message = "**Error** Invalid symbol", row = i, pos = j});
+                            supressedOutput = true;
                         }
                         if (!supressedOutput)
                         {
@@ -186,7 +187,8 @@ namespace lexer
             {
                 currentSymbol = currentLine[j];
                 int symbolAttr = GetSymbolAttr(currentSymbol);
-                if (symbolAttr == attributesTypes[type])
+                // if type == constant it takes only digits, if identifier it takes letters or digits starting from second symbol
+                if (symbolAttr == attributesTypes[type] || symbolAttr == attributesTypes[attrType.constant])
                     buffer += currentSymbol.ToString();
                 else break;
             }

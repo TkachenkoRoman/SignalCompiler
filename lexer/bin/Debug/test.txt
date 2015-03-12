@@ -4,8 +4,8 @@ VAR FIRST : INTEGER;
 	THIRD : INTEGER; b
 BEGIN (
   12344;
-  459;
-  LOL;
+  459ABC;
+  LOL123;
 (***************************************)
 END.	
 (**)
