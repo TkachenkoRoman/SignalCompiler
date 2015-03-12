@@ -16,6 +16,7 @@ namespace lexer
             identifiers = SerializeTables.DeserializeIdentifiers();
             keyWords = SerializeTables.DeserializeKeyWords();
             constants = new List<Constant>();
+            errors = new List<Error>();
         }
 
         private List<Attributes> attributes;
@@ -36,6 +37,7 @@ namespace lexer
             { attrType.invalid, 6}
         };
 
+        public List<Error> errors;
         public List<LexicalAnalizerOutput> Analize(string filepath)
         {
             List<LexicalAnalizerOutput> result = new List<LexicalAnalizerOutput>();
@@ -102,8 +104,13 @@ namespace lexer
                         else if (symbolAttr == attributesTypes[attrType.begCom]) // Comment
                         {
                             SkipComment(lines, ref i, ref j);
+                            supressedOutput = true;
                         }
-                        else j++;
+                        else
+                        {
+                            j++;
+                            errors.Add(new Error { message = "**Error** Invalid symbol", row = i, pos = j});
+                        }
                         if (!supressedOutput)
                         {
                             result.Add(new LexicalAnalizerOutput { code = lexCode, lexem = currLexem });
@@ -132,10 +139,11 @@ namespace lexer
             }
             else // error ??      
             {
-                j = 0;
-                i++;
-                entry_i = i;
-                entry_j = j;
+                errors.Add(new Error { message = "**Error** BegCom symbol without '*'", row = i, pos = j });
+                j++; // Analize method will iterate to next row
+                //entry_i = i;
+                //entry_j = j;
+                return;
             }
 
             if (currentSymbol == (char)commentSymbol[0]) // if (*
@@ -150,18 +158,22 @@ namespace lexer
                         if (currentSymbol == commentSymbol[0] && nextSymbol == endCom[0]) // end of Comment found
                         {
                             i = k;
+                            j += 2; // skip "*)"
                             return;
                         }
                     }
+                    j = 0;
                 }
                 // ERROR end of comment not found
                 i = entry_i; // skip begCom and continue parsing
                 j = entry_j;
+                errors.Add(new Error { message = "**Error** End of comment not found", row = i, pos = j });
                 return;
             }
             else
             {
                 // ERROR ("Do u mean comment? '*' missing")
+                errors.Add(new Error { message = "**Error** Do u mean comment? '*' missing", row = i, pos = j });
             }
         }
 

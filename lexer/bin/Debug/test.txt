@@ -1,10 +1,18 @@
 PROGRAM HELLOWORLD; (* valid comment *)
 VAR FIRST : INTEGER;
 	SECOND : FLOAT;
-	THIRD : INTEGER;
-BEGIN
+	THIRD : INTEGER; b
+BEGIN (
   12344;
   459;
   LOL;
-
+(***************************************)
 END.	
+(**)
+(****
+MULTILINE 
+COMMENT 
+FOOOO
+*****)
+
+(* CLOSE ME

@@ -31,6 +31,14 @@ namespace lexer
             {
                 Debug.Print("Lexem: {0}\tCode: {1}", item.lexem, item.code);
             }
+            Debug.Print("\n");
+            if (lexer.errors.Count() > 0)
+            {
+                foreach (var item in lexer.errors)
+                {
+                    Debug.Print(item.message + " in row {0}, position {1}", item.row.ToString(), item.pos.ToString());
+                }
+            }
         }
     }
 }

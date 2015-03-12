@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Attributes.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="Error.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
