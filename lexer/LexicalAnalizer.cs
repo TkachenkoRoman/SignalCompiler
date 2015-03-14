@@ -42,7 +42,7 @@ namespace lexer
         };
 
         private List<Error> errors;
-        public delegate void WorkDoneHandler(List<LexicalAnalizerOutput> output, List<Error> errors);
+        public delegate void WorkDoneHandler(List<LexicalAnalizerOutput> output, List<Error> errors, List<Constant> constants, List<Identifier> identifiers);
         public event WorkDoneHandler WorkDone;
 
         public void Analize()
@@ -130,7 +130,7 @@ namespace lexer
 
                 }
             }
-            if (WorkDone != null) WorkDone(result, errors);
+            if (WorkDone != null) WorkDone(result, errors, constants, identifiers);
         }
 
         private void SkipComment(string[] lines, ref int i, ref int j)
@@ -273,7 +273,15 @@ namespace lexer
             else
                 return attributesTypes[attrType.invalid]; 
         }
-    }
+        public List<Constant> GetConstants()
+        {
+            return constants;
+        }
+        public List<Identifier> GetIdentifiers()
+        {
+            return identifiers;
+        }
+    } 
 }
 
 struct LexicalAnalizerOutput
