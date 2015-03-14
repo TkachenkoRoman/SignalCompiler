@@ -10,15 +10,19 @@ namespace lexer
     enum attrType { whitespace, constant, identifier, oneSymbDelimiter, manySymbDelimiter, begCom, invalid };
     class LexicalAnalizer
     {
-        public LexicalAnalizer()
+        public LexicalAnalizer(string[] lines, string filepath = "")
         {
             attributes = SerializeTables.DeserializeAttributes();
             identifiers = SerializeTables.DeserializeIdentifiers();
             keyWords = SerializeTables.DeserializeKeyWords();
             constants = new List<Constant>();
             errors = new List<Error>();
+            this.filepath = filepath;
+            this.lines = lines;
         }
 
+        private string[] lines;
+        private string filepath;
         private List<Attributes> attributes;
         private List<Identifier> identifiers;
         private List<KeyWord> keyWords;
@@ -37,19 +41,25 @@ namespace lexer
             { attrType.invalid, 6}
         };
 
-        public List<Error> errors;
-        public List<LexicalAnalizerOutput> Analize(string filepath)
+        private List<Error> errors;
+        public delegate void WorkDoneHandler(List<LexicalAnalizerOutput> output, List<Error> errors);
+        public event WorkDoneHandler WorkDone;
+
+        public void Analize()
         {
             List<LexicalAnalizerOutput> result = new List<LexicalAnalizerOutput>();
-            string[] lines;
+            string[] lines = this.lines;
 
-            if (File.Exists(filepath))
+            if (filepath.Length > 1)
             {
-                lines = File.ReadAllLines(filepath);
-            }
-            else
-            {
-                throw new FileNotFoundException();
+                if (File.Exists(filepath))
+                {
+                    lines = File.ReadAllLines(filepath);
+                }
+                else
+                {
+                    throw new FileNotFoundException();
+                }
             }
 
             int i = 0; // row number
@@ -120,8 +130,7 @@ namespace lexer
 
                 }
             }
-
-            return result;
+            if (WorkDone != null) WorkDone(result, errors);
         }
 
         private void SkipComment(string[] lines, ref int i, ref int j)
@@ -130,7 +139,7 @@ namespace lexer
             int entry_j = j;
             string currentLine = lines[i];
             char currentSymbol = currentLine[j];
-            bool commentSkipped = false;
+
             j++;
 
             if (j < currentLine.Length)
@@ -149,13 +158,15 @@ namespace lexer
 
             if (currentSymbol == (char)commentSymbol[0]) // if (*
             {
+                j++;
                 for (int k = i; k < lines.Count(); k++)
                 {
                     currentLine = lines[k];
-                    while (++j < currentLine.Length - 1)
+                    while (j < currentLine.Length - 1)
                     {
                         currentSymbol = currentLine[j];
                         char nextSymbol = currentLine[j + 1];
+                        j++;
                         if (currentSymbol == commentSymbol[0] && nextSymbol == endCom[0]) // end of Comment found
                         {
                             i = k;
