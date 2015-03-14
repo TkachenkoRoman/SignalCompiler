@@ -37,12 +37,12 @@
             this.buildSolutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.richTextBoxCode = new System.Windows.Forms.RichTextBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.labelErrorList = new System.Windows.Forms.Label();
             this.labelOutput = new System.Windows.Forms.Label();
             this.richTextBoxOutput = new System.Windows.Forms.RichTextBox();
-            this.labelErrorList = new System.Windows.Forms.Label();
             this.richTextBoxErrorList = new System.Windows.Forms.RichTextBox();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.numberedRTBCode = new LineNumbers.NumberedRTB();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -120,10 +120,10 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.labelErrorList, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.richTextBoxCode, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelOutput, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.richTextBoxOutput, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.richTextBoxErrorList, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.numberedRTBCode, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 24);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -135,25 +135,19 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1003, 491);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // richTextBoxCode
+            // labelErrorList
             // 
-            this.richTextBoxCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.labelErrorList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxCode.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxCode.Location = new System.Drawing.Point(3, 3);
-            this.richTextBoxCode.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
-            this.richTextBoxCode.Name = "richTextBoxCode";
-            this.tableLayoutPanel1.SetRowSpan(this.richTextBoxCode, 4);
-            this.richTextBoxCode.Size = new System.Drawing.Size(493, 485);
-            this.richTextBoxCode.TabIndex = 1;
-            this.richTextBoxCode.Text = " ";
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "files *.txt|*.txt";
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.labelErrorList.AutoSize = true;
+            this.labelErrorList.Location = new System.Drawing.Point(501, 321);
+            this.labelErrorList.Margin = new System.Windows.Forms.Padding(0);
+            this.labelErrorList.Name = "labelErrorList";
+            this.labelErrorList.Size = new System.Drawing.Size(502, 20);
+            this.labelErrorList.TabIndex = 4;
+            this.labelErrorList.Text = "Error List";
+            this.labelErrorList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelOutput
             // 
@@ -182,20 +176,6 @@
             this.richTextBoxOutput.TabIndex = 3;
             this.richTextBoxOutput.Text = "";
             // 
-            // labelErrorList
-            // 
-            this.labelErrorList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelErrorList.AutoSize = true;
-            this.labelErrorList.Location = new System.Drawing.Point(501, 321);
-            this.labelErrorList.Margin = new System.Windows.Forms.Padding(0);
-            this.labelErrorList.Name = "labelErrorList";
-            this.labelErrorList.Size = new System.Drawing.Size(502, 20);
-            this.labelErrorList.TabIndex = 4;
-            this.labelErrorList.Text = "Error List";
-            this.labelErrorList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // richTextBoxErrorList
             // 
             this.richTextBoxErrorList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -208,6 +188,25 @@
             this.richTextBoxErrorList.Size = new System.Drawing.Size(496, 144);
             this.richTextBoxErrorList.TabIndex = 5;
             this.richTextBoxErrorList.Text = "";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "files *.txt|*.txt";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // numberedRTBCode
+            // 
+            this.numberedRTBCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numberedRTBCode.BackColor = System.Drawing.SystemColors.Window;
+            this.numberedRTBCode.Font = new System.Drawing.Font("Consolas", 10.75F);
+            this.numberedRTBCode.Location = new System.Drawing.Point(4, 4);
+            this.numberedRTBCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numberedRTBCode.Name = "numberedRTBCode";
+            this.tableLayoutPanel1.SetRowSpan(this.numberedRTBCode, 4);
+            this.numberedRTBCode.Size = new System.Drawing.Size(493, 483);
+            this.numberedRTBCode.TabIndex = 6;
             // 
             // Form1
             // 
@@ -240,11 +239,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.RichTextBox richTextBoxCode;
         private System.Windows.Forms.Label labelOutput;
         private System.Windows.Forms.RichTextBox richTextBoxOutput;
         private System.Windows.Forms.Label labelErrorList;
         private System.Windows.Forms.RichTextBox richTextBoxErrorList;
+        private LineNumbers.NumberedRTB numberedRTBCode;
     }
 }
 

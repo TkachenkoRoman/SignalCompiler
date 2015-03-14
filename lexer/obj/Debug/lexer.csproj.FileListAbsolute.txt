@@ -7,3 +7,5 @@ D:\Translator\lexer\lexer\obj\Debug\lexer.csproj.GenerateResource.Cache
 D:\Translator\lexer\lexer\obj\Debug\lexer.exe
 D:\Translator\lexer\lexer\obj\Debug\lexer.pdb
 D:\Translator\lexer\lexer\obj\Debug\lexer.Form1.resources
+D:\Translator\lexer\lexer\bin\Debug\LineNumbers.dll
+D:\Translator\lexer\lexer\bin\Debug\LineNumbers.pdb

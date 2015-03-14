@@ -30,8 +30,8 @@ namespace lexer
 
         private void ClearScreens()
         {
-            Invoke((MethodInvoker)delegate { richTextBoxOutput.Text += ""; });
-            Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += ""; }); 
+            Invoke((MethodInvoker)delegate { richTextBoxOutput.Text = ""; });
+            Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text = ""; }); 
         }
 
         private void oPENToolStripMenuItem_Click(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace lexer
         {
             if (openFileDialog1.FileName.Length > 0)
             {
-                richTextBoxCode.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.PlainText);
+                numberedRTBCode.RichTextBox.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.PlainText);
             }
         }
 
@@ -89,7 +89,7 @@ namespace lexer
         private void buildSolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //string path = System.IO.Directory.GetCurrentDirectory() + @"\test.txt";
-            LexicalAnalizer lexer = new LexicalAnalizer(richTextBoxCode.Lines);
+            LexicalAnalizer lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
             lexer.WorkDone += LexerWorkDone;
             Thread lexerThread = new Thread(new ThreadStart(lexer.Analize));
 
@@ -107,7 +107,7 @@ namespace lexer
         {
             if (saveFileDialog1.FileName.Length > 0)
             {
-                richTextBoxCode.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.PlainText);
+                numberedRTBCode.RichTextBox.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.PlainText);
             }
         }
     }

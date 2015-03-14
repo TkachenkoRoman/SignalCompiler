@@ -170,7 +170,7 @@ namespace lexer
                         if (currentSymbol == commentSymbol[0] && nextSymbol == endCom[0]) // end of Comment found
                         {
                             i = k;
-                            j += 2; // skip "*)"
+                            j += 1; // skip "*)"
                             return;
                         }
                     }
