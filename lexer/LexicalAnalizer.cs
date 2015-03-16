@@ -113,8 +113,11 @@ namespace lexer
                         }
                         else if (symbolAttr == attributesTypes[attrType.begCom]) // Comment
                         {
+                            int indexBeforeSkipping = i;
                             SkipComment(lines, ref i, ref j);
                             supressedOutput = true;
+                            if (indexBeforeSkipping != i)
+                                break;
                         }
                         else
                         {
