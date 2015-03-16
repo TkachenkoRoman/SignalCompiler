@@ -25,8 +25,10 @@ namespace lexer
             //SerializeTables.DeserializeKeyWords();
             //SerializeTables.DeserializeIdentifiers();
 
-            
+            lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
         }
+
+        LexicalAnalizer lexer;
 
         private void ClearScreens()
         {
@@ -50,6 +52,10 @@ namespace lexer
         private void LexerWorkDone(List<LexicalAnalizerOutput> output, List<Error> errors, List<Constant> constants, List<Identifier> identifiers)
         {
             ClearScreens();
+             // add space to call TextChanged and highlight syntax
+            Invoke((MethodInvoker)delegate { numberedRTBCode.RichTextBox.Text += " "; });
+            
+
             foreach (var item in output)
             {
                 string message = String.Format("Lexem: {0}\t\tCode: {1}\n", item.lexem, item.code);
@@ -89,7 +95,7 @@ namespace lexer
         private void buildSolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //string path = System.IO.Directory.GetCurrentDirectory() + @"\test.txt";
-            LexicalAnalizer lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
+            lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
             lexer.WorkDone += LexerWorkDone;
             Thread lexerThread = new Thread(new ThreadStart(lexer.Analize));
 
@@ -109,6 +115,124 @@ namespace lexer
             {
                 numberedRTBCode.RichTextBox.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.PlainText);
             }
+        }
+
+        //
+        //numberedRTB
+        //
+        private void numberedRTBCodeRichTextBoxTextChanged(object sender, EventArgs e) // highlight syntax
+        {
+            int start = 0;
+             // avoid blinking
+            Invoke((MethodInvoker)delegate { labelOutput.Focus(); });
+
+            // saving original caret position + forecolor
+            int originalIndex = numberedRTBCode.RichTextBox.SelectionStart; 
+            int originalLength = numberedRTBCode.RichTextBox.SelectionLength; 
+            Color originalColor = numberedRTBCode.RichTextBox.SelectionColor;
+
+            // removes any previous highlighting (so modified words won't remain highlighted)
+            numberedRTBCode.RichTextBox.SelectionStart = 0;
+            numberedRTBCode.RichTextBox.SelectionLength = numberedRTBCode.RichTextBox.Text.Length;
+            numberedRTBCode.RichTextBox.SelectionColor = Color.Black;
+
+          
+            if (numberedRTBCode.RichTextBox.Text.Length > 0)
+            {
+                if (lexer.keyWords.Count > 0)
+                {
+                    foreach (var item in lexer.keyWords) // highlight keyWords
+                    {
+                        start = 0;
+                        while (start < numberedRTBCode.RichTextBox.Text.Length)
+                        {
+                            start = SelectWordsInCode(start, item.keyWord, Color.Blue);
+                            if (start == -1)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (lexer.constants.Count > 0)
+                {
+                    foreach (var item in lexer.constants) // highlight constants
+                    {
+                        start = 0;
+                        while (start < numberedRTBCode.RichTextBox.Text.Length)
+                        {
+                            start = SelectWordsInCode(start, item.value.ToString(), Color.MediumVioletRed);
+                            if (start == -1)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (lexer.identifiers.Count > 0)
+                {
+                    foreach (var item in lexer.identifiers.Where(x => x.type == identifierType.system)) // highlight identifiers
+                    {
+                        start = 0;
+                        while (start < numberedRTBCode.RichTextBox.Text.Length)
+                        {
+                            start = SelectWordsInCode(start, item.name, Color.CadetBlue);
+                            if (start == -1)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                start = 0;
+                while (start < numberedRTBCode.RichTextBox.Text.Length)
+                {
+                    int begComFindIndex = -1;
+                    int endComFindIndex = -1;
+                    begComFindIndex = numberedRTBCode.RichTextBox.Find("(*", start, numberedRTBCode.RichTextBox.Text.Length, RichTextBoxFinds.MatchCase);
+                    endComFindIndex = numberedRTBCode.RichTextBox.Find("*)", start, numberedRTBCode.RichTextBox.Text.Length, RichTextBoxFinds.MatchCase);
+                    if (begComFindIndex >= 0 && endComFindIndex > 0 )
+                    {
+                        if (begComFindIndex < endComFindIndex)
+                        {
+                            int selectionLength = endComFindIndex - begComFindIndex + 2;
+                            numberedRTBCode.RichTextBox.SelectionStart = begComFindIndex;
+                            numberedRTBCode.RichTextBox.SelectionLength = selectionLength;
+                            numberedRTBCode.RichTextBox.SelectionColor = Color.Green;
+                            start = endComFindIndex;
+                        }
+                        else
+                            start = begComFindIndex; 
+                    }
+                    if (endComFindIndex == -1 || begComFindIndex == -1)
+                        break;
+                }
+                
+            }
+
+            // restoring the original colors, for further writing
+            numberedRTBCode.RichTextBox.SelectionStart = originalIndex;
+            numberedRTBCode.RichTextBox.SelectionLength = originalLength;
+            numberedRTBCode.RichTextBox.SelectionColor = originalColor;
+
+            // restore focus
+            Invoke((MethodInvoker)delegate { numberedRTBCode.RichTextBox.Focus(); });
+        }
+
+        private int SelectWordsInCode(int start, string word, Color color)
+        {
+            int startIndex = -1;
+            if (start >= 0)
+                startIndex = numberedRTBCode.RichTextBox.Find(word, start, numberedRTBCode.RichTextBox.Text.Length, RichTextBoxFinds.MatchCase);
+            if (startIndex >= 0)
+            {
+                int selectionLength = word.Length;
+                numberedRTBCode.RichTextBox.SelectionStart = startIndex;
+                numberedRTBCode.RichTextBox.SelectionLength = selectionLength;
+                numberedRTBCode.RichTextBox.SelectionColor = color;
+                return startIndex + selectionLength;
+            }
+            return -1;
         }
     }
 }

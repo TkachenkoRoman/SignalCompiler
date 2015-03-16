@@ -207,6 +207,7 @@
             this.tableLayoutPanel1.SetRowSpan(this.numberedRTBCode, 4);
             this.numberedRTBCode.Size = new System.Drawing.Size(493, 483);
             this.numberedRTBCode.TabIndex = 6;
+            this.numberedRTBCode.RichTextBox.TextChanged += new System.EventHandler(this.numberedRTBCodeRichTextBoxTextChanged);
             // 
             // Form1
             // 

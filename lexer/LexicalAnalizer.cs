@@ -24,9 +24,9 @@ namespace lexer
         private string[] lines;
         private string filepath;
         private List<Attributes> attributes;
-        private List<Identifier> identifiers;
-        private List<KeyWord> keyWords;
-        private List<Constant> constants;
+        public List<Identifier> identifiers;
+        public List<KeyWord> keyWords;
+        public List<Constant> constants;
 
         public static string commentSymbol = "*";
         public static string endCom = ")";
