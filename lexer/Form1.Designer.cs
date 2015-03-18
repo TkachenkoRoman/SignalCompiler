@@ -1,4 +1,6 @@
-﻿namespace lexer
+﻿
+
+namespace lexer
 {
     partial class Form1
     {
