@@ -185,11 +185,13 @@ namespace lexer
                     }
                 }
                 start = 0;
-                while (start < numberedRTBCode.RichTextBox.Text.Length)
+                while (start < numberedRTBCode.RichTextBox.Text.Length) // highlight comments
                 {
                     int begComFindIndex = -1;
                     int endComFindIndex = -1;
                     begComFindIndex = numberedRTBCode.RichTextBox.Find("(*", start, numberedRTBCode.RichTextBox.Text.Length, RichTextBoxFinds.MatchCase);
+                    if (begComFindIndex != -1)
+                        start = begComFindIndex + 2; // skip begcom symb
                     endComFindIndex = numberedRTBCode.RichTextBox.Find("*)", start, numberedRTBCode.RichTextBox.Text.Length, RichTextBoxFinds.MatchCase);
                     if (begComFindIndex >= 0 && endComFindIndex > 0 )
                     {
@@ -201,8 +203,6 @@ namespace lexer
                             numberedRTBCode.RichTextBox.SelectionColor = Color.Green;
                             start = endComFindIndex;
                         }
-                        else
-                            start = begComFindIndex; 
                     }
                     if (endComFindIndex == -1 || begComFindIndex == -1)
                         break;

@@ -59,7 +59,7 @@ namespace lexer
             char[] begCom = new char[] { '(' };
 
             List<Attributes> listAttributes = new List<Attributes>();
-            for (int i = 0; i < 255; i++)
+            for (int i = 0; i <= 255; i++)
             {
                 Attributes attributes = new Attributes();
                 attributes.symbol = Convert.ToChar(i); // convert ascii to char
