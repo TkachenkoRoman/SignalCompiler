@@ -63,6 +63,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializeTables.cs" />
+    <Compile Include="SyntaxAnalizer.cs" />
+    <Compile Include="SyntaxTree\BlockBranch.cs" />
+    <Compile Include="SyntaxTree\Declaration.cs" />
+    <Compile Include="SyntaxTree\ProgramBranch.cs" />
+    <Compile Include="SyntaxTree\Statement.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
