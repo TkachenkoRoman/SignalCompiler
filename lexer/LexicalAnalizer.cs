@@ -127,7 +127,7 @@ namespace lexer
                         }
                         if (!supressedOutput)
                         {
-                            result.Add(new LexicalAnalizerOutput { code = lexCode, lexem = currLexem });
+                            result.Add(new LexicalAnalizerOutput { code = lexCode, lexem = currLexem, row = i });
                         }
                     }
 
@@ -291,4 +291,5 @@ struct LexicalAnalizerOutput
 {
     public int code;
     public string lexem;
+    public int row;
 }

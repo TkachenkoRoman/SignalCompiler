@@ -66,6 +66,7 @@
     <Compile Include="SyntaxAnalizer.cs" />
     <Compile Include="SyntaxTree\BlockBranch.cs" />
     <Compile Include="SyntaxTree\Declaration.cs" />
+    <Compile Include="SyntaxTree\Node.cs" />
     <Compile Include="SyntaxTree\ProgramBranch.cs" />
     <Compile Include="SyntaxTree\Statement.cs" />
     <EmbeddedResource Include="Form1.resx">

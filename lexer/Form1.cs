@@ -91,7 +91,33 @@ namespace lexer
                 string message = String.Format("name: {0}\t\tid: {1}\n", item.name, item.id);
                 Invoke((MethodInvoker)delegate { richTextBoxOutput.Text += message; });
             }
+
+            //
+            // CALL SYNTAX_ANALIZEER WHEN LEXER FINISES
+            //
+            SyntaxAnalizer syntaxer = new SyntaxAnalizer(output, constants, identifiers, lexer.keyWords);
+            syntaxer.WorkDone += new SyntaxAnalizer.WorkDoneHandler(SyntaxerWorkDone);
+            Thread syntaxerThread = new Thread(new ThreadStart(syntaxer.Analize));
+            syntaxerThread.Start();
         }
+
+
+        private void SyntaxerWorkDone(List<Error> errors)
+        {
+            Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += "\n\nSyntax errors:\n"; });
+            if (errors.Count() > 0)
+            {
+                foreach (var item in errors)
+                {
+                    string message = String.Format(item.message + " in row {0}\n", item.row.ToString());
+                    Debug.Print(message);
+                    Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += message; });
+                }
+            }
+        }
+        
+
+
         private void buildSolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //string path = System.IO.Directory.GetCurrentDirectory() + @"\test.txt";

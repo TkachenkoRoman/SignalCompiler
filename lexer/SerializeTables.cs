@@ -16,6 +16,7 @@ namespace lexer
         private static string attributesTablePath = path + @"\AttributesTable.xml";
         private static string keyWordsTablePath = path + @"\KeyWordsTable.xml";
         private static string identifiersTablePath = path + @"\IdentifiersTable.xml";
+        private static string SyntaxTreePath = path + @"\SyntaxTree.xml";
         private static void Serialize(object obj, string path)
         {
             Type objectType = obj.GetType();
@@ -159,5 +160,11 @@ namespace lexer
 
             return (List<Identifier>)obj;
         }
+
+        public static void SeriaizeNode(SyntaxTree.Node node)
+        {
+            Serialize(node, SyntaxTreePath);
+        }
+
     }
 }

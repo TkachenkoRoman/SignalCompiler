@@ -15,7 +15,7 @@ namespace lexer
             this.constants = constants;
             this.identifiers = identifiers;
             this.keyWords = keyWords;
-            program = new SyntaxTree.ProgramBranch();
+            program = new SyntaxTree.Node("program");
             positionInLexems = -1;
         }
 
@@ -24,30 +24,30 @@ namespace lexer
         private List<Constant> constants;
         private List<Identifier> identifiers;
         private List<KeyWord> keyWords;
-        private SyntaxTree.ProgramBranch program;
+        private SyntaxTree.Node program;
         private int positionInLexems; // current pos in lexems
 
-        private LexicalAnalizerOutput getNextToken()
+        public delegate void WorkDoneHandler(List<Error> errors);
+        public event WorkDoneHandler WorkDone;
+
+        private LexicalAnalizerOutput GetNextToken()
         {
             positionInLexems++;
             return lexems[positionInLexems];
         }
 
-        private bool parseProgram()
+        private bool ParseProgram()
         {
-            LexicalAnalizerOutput currentToken = getNextToken();
+            LexicalAnalizerOutput currentToken = GetNextToken();
+
             if (currentToken.lexem == "PROGRAM")
             {
-                currentToken = getNextToken();
-
-                if (identifiers.Find(x => x.id == currentToken.code) != null)
+                if (ParseProcedureIdn())
                 {
-                    program.progName = currentToken.lexem;
-
-                    currentToken = getNextToken();
+                    currentToken = GetNextToken();
                     if (currentToken.lexem == ";")
                     {
-                        if (!parseBlock())
+                        if (!ParseBlock())
                             return false;
                     }
                     else
@@ -55,7 +55,7 @@ namespace lexer
                         errors.Add(new Error { message = "**Error** ';' expected", row = currentToken.row });
                     }
 
-                    currentToken = getNextToken();
+                    currentToken = GetNextToken();
                     if (currentToken.lexem != ".")
                     {
                         errors.Add(new Error { message = "**Error** '.' expected", row = currentToken.row });
@@ -73,25 +73,66 @@ namespace lexer
             return false;
         }
 
-        private bool parseBlock()
+        private bool ParseProcedureIdn()
         {
-            
+            string identifier = ParseIdentifier();
+            if (identifier != "")
+            {
+                program.AddNode(new SyntaxTree.Node() { name = "procedure_idn", value = identifier });
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-            parseVarDeclarations();
+        private string ParseIdentifier() // return empty string if not parsed else return value
+        {
+            LexicalAnalizerOutput currentToken = GetNextToken();
+            if (identifiers.Find(x => x.id == currentToken.code) != null)
+                return currentToken.lexem;
+            else return "";
+        }
 
+        private bool ParseBlock()
+        {
+            program.AddNode(new SyntaxTree.Node() { name = "block" });
+
+            if (parseVarDeclarations())
+            {
+                // continue parsing BEGIN
+            }
+                
             return true;
 
         }
 
         private bool parseVarDeclarations()
         {
-            LexicalAnalizerOutput currentToken = getNextToken();
+            LexicalAnalizerOutput currentToken = GetNextToken();
             if (currentToken.lexem == "VAR" && keyWords.Find(x => x.id == currentToken.code) != null)
+            {
+                if (program.nodes.Find(x => x.name == "block") != null)
+                {
+                    program.nodes.Find(x => x.name == "block")
+                                 .AddNode(new SyntaxTree.Node() { name = "var_declar" });
+                }
+                
+                program.nodes.Find(x => x.name == "block")
+                       .nodes.Find(x => x.name == "var_declar")
+                       .AddNode(new SyntaxTree.Node() { name = "declar_list" });
+
                 if (parseDeclarationList())
                 {
                     return true;
                 }
-                else return false;
+                else
+                {
+                    errors.Add(new Error { message = "**Error** No declarations found", row = currentToken.row });
+                    return false;
+                }
+            }   
             return true;    
         }
 
@@ -99,30 +140,41 @@ namespace lexer
         {
             if (parseDeclaration())
                 parseDeclarationList();
-            if (program.block.declarations.Count != 0)
+            if (program.nodes.Find(x => x.name == "block")
+                       .nodes.Find(x => x.name == "var_declar")
+                       .nodes.Find(x => x.name == "declar_list")
+                       .nodes.Count > 0)
                 return true;
-            else return false;
+            else // no declarations found
+            {
+                program.nodes.Find(x => x.name == "block")
+                       .nodes.Find(x => x.name == "var_declar")
+                       .nodes.Clear();
+                return false;
+            }
         }
 
         private bool parseDeclaration()
         {
-            LexicalAnalizerOutput currentToken = getNextToken();
-            LexicalAnalizerOutput expectedDeclarationIdentifier = currentToken;
-            if (identifiers.Find(x => x.type == identifierType.user && x.id == currentToken.code) != null)
+            LexicalAnalizerOutput currentToken = new LexicalAnalizerOutput();
+            string expectedDeclarationIdentifier = ParseVarIdn();
+            if (expectedDeclarationIdentifier != "")//identifiers.Find(x => x.type == identifierType.user && x.id == currentToken.code) != null)
             {
-                currentToken = getNextToken();
+                currentToken = GetNextToken();
                 if (currentToken.lexem == ":")
                 {
-                    currentToken = getNextToken();
-                    if (identifiers.Find(x => x.type == identifierType.system) != null)
+                    string expectedDeclarationType = ParseAttribute();
+                    if (expectedDeclarationType != "")
                     {
-                        LexicalAnalizerOutput expectedDeclarationType = currentToken;
-                        currentToken = getNextToken();
+                        currentToken = GetNextToken();
                         if (currentToken.lexem == ";")
                         {
-                            program.block.declarations.Add(new SyntaxTree.Declaration() 
-                                                                { identifier = expectedDeclarationIdentifier.lexem, 
-                                                                  type = expectedDeclarationType.lexem });
+                            program.nodes.Find(x => x.name == "block")
+                                   .nodes.Find(x => x.name == "var_declar")
+                                   .nodes.Find(x => x.name == "declar_list")
+                                   .nodes.Find(x => x.name == "declaration" && x.nodes.Find(y => y.name == "var_idn" && y.value == expectedDeclarationIdentifier) != null)
+                                   .AddNode(new SyntaxTree.Node() { name = "attribute", value = expectedDeclarationType });
+
                             return true;
                         }
                         else 
@@ -139,9 +191,37 @@ namespace lexer
             return false;
         }
 
+        private string ParseAttribute()
+        {
+            LexicalAnalizerOutput currentToken = GetNextToken();
+            if (identifiers.Find(x => x.type == identifierType.system && x.id == currentToken.code) != null)
+                return currentToken.lexem;
+            else return "";
+        }
+
+        private string ParseVarIdn()
+        {
+            string identifier = ParseIdentifier();
+            if (identifier != "")
+            {
+                program.nodes.Find(x => x.name == "block")
+                       .nodes.Find(x => x.name == "var_declar")
+                       .nodes.Find(x => x.name == "declar_list")
+                       .AddNode(new SyntaxTree.Node() { name = "declaration" })
+                       .AddNode(new SyntaxTree.Node() { name = "var_idn", value = identifier});
+                return identifier;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public void Analize()
         {
-            parseProgram();
+            ParseProgram();
+            SerializeTables.SeriaizeNode(program);
+            if (WorkDone != null) WorkDone(errors);
         }
     }
 }
