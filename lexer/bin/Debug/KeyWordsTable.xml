@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKeyWord xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyWord>
+    <keyWord>PROGRAM</keyWord>
+    <id>301</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>BEGIN</keyWord>
+    <id>302</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>END</keyWord>
+    <id>303</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>VAR</keyWord>
+    <id>304</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>IF</keyWord>
+    <id>305</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>THEN</keyWord>
+    <id>306</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>ELSE</keyWord>
+    <id>307</id>
+  </KeyWord>
+  <KeyWord>
+    <keyWord>ENDIF</keyWord>
+    <id>308</id>
+  </KeyWord>
+</ArrayOfKeyWord>
