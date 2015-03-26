@@ -1,8 +1,11 @@
-PROGRAM (*comment*)
-12343 (*constant*)
-(*
-tejytbjvdfhyivd
-j
-*)
-(*****************************************)
-(**)
+PROGRAM HELLOWORLD; (* valid comment *)
+VAR FIRST : INTEGER;
+    SECOND : FLOAT;
+    THIRD : INTEGER; 
+BEGIN 
+
+IF SECOND = FIRST THEN ENDIF;
+IF SECOND = FIRST THEN ENDIF;
+IF SECOND = FIRST THEN ENDIF;
+IF SECOND = FIRST THEN ENDIF;
+END.	       

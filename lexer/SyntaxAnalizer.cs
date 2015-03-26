@@ -138,7 +138,6 @@ namespace lexer
                     // continue parsing statementList
                     if (parseStatementList(program.nodes.Find(x => x.name == nodesTypes.block)))
                     {
-                        positionInLexems--;
                         currentToken = GetNextToken();
                         if (currentToken.lexem == "END")
                         {
@@ -169,7 +168,11 @@ namespace lexer
             if (parseStatement(currentNode))
                 parseStatementList(curr);
             else
-                currentNode.nodes.Clear();
+            {
+                positionInLexems--;
+                curr.nodes.Remove(currentNode);
+            }
+                
 
             //positionInLexems--;  
             return true;
@@ -223,10 +226,6 @@ namespace lexer
                     {
                         if (parseStatementList(currentNode))
                         {
-                            positionInLexems--; /// while statement list parsing
-                                                /// the positionInLexems moved to 
-                                                /// one position more to look what 
-                                                /// goes after THEN statement
                             return true;
                         }
                     }
@@ -264,10 +263,17 @@ namespace lexer
             LexicalAnalizerOutput currentToken = GetNextToken();
 
             if (constants.Find(x => x.id == currentToken.code) != null)
+            {
+                currentNode.value = currentToken.lexem;
                 return true;
+            }
+                
 
             if (identifiersExtended.Find(x => x.name == currentToken.lexem) != null)
+            {
+                currentNode.value = currentToken.lexem;
                 return true;
+            }
             else
                 errors.Add(new Error { message = "**Error** Undeclared identifier", row = currentToken.row });
             

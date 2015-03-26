@@ -94,65 +94,15 @@
                           <nodes>
                             <Node>
                               <name>expression</name>
-                              <value>empty</value>
+                              <value>SECOND</value>
                               <nodes />
                             </Node>
                             <Node>
                               <name>expression</name>
-                              <value>empty</value>
+                              <value>FIRST</value>
                               <nodes />
                             </Node>
                           </nodes>
-                        </Node>
-                        <Node>
-                          <name>statement_list</name>
-                          <value>empty</value>
-                          <nodes>
-                            <Node>
-                              <name>statement</name>
-                              <value>empty</value>
-                              <nodes>
-                                <Node>
-                                  <name>conditional_statement</name>
-                                  <value>empty</value>
-                                  <nodes>
-                                    <Node>
-                                      <name>incomplete_conditional_statement</name>
-                                      <value>empty</value>
-                                      <nodes>
-                                        <Node>
-                                          <name>conditional_expression</name>
-                                          <value>empty</value>
-                                          <nodes>
-                                            <Node>
-                                              <name>expression</name>
-                                              <value>empty</value>
-                                              <nodes />
-                                            </Node>
-                                            <Node>
-                                              <name>expression</name>
-                                              <value>empty</value>
-                                              <nodes />
-                                            </Node>
-                                          </nodes>
-                                        </Node>
-                                        <Node>
-                                          <name>statement_list</name>
-                                          <value>empty</value>
-                                          <nodes />
-                                        </Node>
-                                      </nodes>
-                                    </Node>
-                                  </nodes>
-                                </Node>
-                              </nodes>
-                            </Node>
-                          </nodes>
-                        </Node>
-                        <Node>
-                          <name>statement_list</name>
-                          <value>empty</value>
-                          <nodes />
                         </Node>
                       </nodes>
                     </Node>
@@ -165,7 +115,82 @@
         <Node>
           <name>statement_list</name>
           <value>empty</value>
-          <nodes />
+          <nodes>
+            <Node>
+              <name>statement</name>
+              <value>empty</value>
+              <nodes>
+                <Node>
+                  <name>conditional_statement</name>
+                  <value>empty</value>
+                  <nodes>
+                    <Node>
+                      <name>incomplete_conditional_statement</name>
+                      <value>empty</value>
+                      <nodes>
+                        <Node>
+                          <name>conditional_expression</name>
+                          <value>empty</value>
+                          <nodes>
+                            <Node>
+                              <name>expression</name>
+                              <value>SECOND</value>
+                              <nodes />
+                            </Node>
+                            <Node>
+                              <name>expression</name>
+                              <value>FIRST</value>
+                              <nodes />
+                            </Node>
+                          </nodes>
+                        </Node>
+                      </nodes>
+                    </Node>
+                  </nodes>
+                </Node>
+              </nodes>
+            </Node>
+          </nodes>
+        </Node>
+        <Node>
+          <name>statement_list</name>
+          <value>empty</value>
+          <nodes>
+            <Node>
+              <name>statement</name>
+              <value>empty</value>
+              <nodes>
+                <Node>
+                  <name>conditional_statement</name>
+                  <value>empty</value>
+                  <nodes>
+                    <Node>
+                      <name>incomplete_conditional_statement</name>
+                      <value>empty</value>
+                      <nodes>
+                        <Node>
+                          <name>conditional_expression</name>
+                          <value>empty</value>
+                          <nodes>
+                            <Node>
+                              <name>expression</name>
+                              <value>SECOND</value>
+                              <nodes />
+                            </Node>
+                            <Node>
+                              <name>expression</name>
+                              <value>FIRST</value>
+                              <nodes />
+                            </Node>
+                          </nodes>
+                        </Node>
+                      </nodes>
+                    </Node>
+                  </nodes>
+                </Node>
+              </nodes>
+            </Node>
+          </nodes>
         </Node>
       </nodes>
     </Node>
