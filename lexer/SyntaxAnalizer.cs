@@ -9,6 +9,7 @@ namespace lexer
     public enum nodesTypes
     {
         node,
+        token,
         program,
         procedure_idn,
         block,
@@ -62,14 +63,17 @@ namespace lexer
         private bool ParseProgram()
         {
             LexicalAnalizerOutput currentToken = GetNextToken();
+            SyntaxTree.Node currentNode = program;
 
             if (currentToken.lexem == "PROGRAM")
             {
+                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem});
                 if (ParseProcedureIdn())
                 {
                     currentToken = GetNextToken();
                     if (currentToken.lexem == ";")
                     {
+                        currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                         if (!ParseBlock())
                             return false;
                     }
@@ -81,9 +85,10 @@ namespace lexer
                     currentToken = GetNextToken();
                     if (currentToken.lexem == ".")
                     {
+                        currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                         currentToken = GetNextToken();
                         if (currentToken.code != -1) // if any lexems exists
-                            errors.Add(new Error { message = "**Error** Expected end of file", row = currentToken.row });
+                            errors.Add(new Error { message = "**Error** Expected end of program", row = currentToken.row });
                     }
                     else
                         errors.Add(new Error { message = "**Error** '.' expected", row = currentToken.row });
@@ -117,14 +122,19 @@ namespace lexer
         private string ParseIdentifier() // return empty string if not parsed else return value
         {
             LexicalAnalizerOutput currentToken = GetNextToken();
-            if (identifiers.Find(x => x.id == currentToken.code) != null)
+            if (identifiers.Find(x => x.id == currentToken.code && x.type != identifierType.system) != null)
                 return currentToken.lexem;
-            else return "";
+            else
+            {
+                errors.Add(new Error { message = "**Error** Expected user identifier", row = currentToken.row });
+                return "";
+            }
         }
 
         private bool ParseBlock()
         {
-            program.AddNode(new SyntaxTree.Node() { name = nodesTypes.block });
+            SyntaxTree.Node currentNode = program.AddNode(new SyntaxTree.Node() { name = nodesTypes.block });
+
 
             if (parseVarDeclarations())
             {
@@ -135,12 +145,14 @@ namespace lexer
                 LexicalAnalizerOutput currentToken = GetNextToken(); //BEGIN expected
                 if (currentToken.lexem == "BEGIN")
                 {
+                    currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                     // continue parsing statementList
                     if (parseStatementList(program.nodes.Find(x => x.name == nodesTypes.block)))
                     {
                         currentToken = GetNextToken();
                         if (currentToken.lexem == "END")
                         {
+                            currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                             return true;
                         }
                         else
@@ -188,9 +200,13 @@ namespace lexer
                 LexicalAnalizerOutput currentToken = GetNextToken();
                 if (currentToken.lexem == "ENDIF")
                 {
+                    currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                     currentToken = GetNextToken();
                     if (currentToken.lexem == ";")
+                    {
+                        currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                         return true;
+                    }
                     else
                         errors.Add(new Error { message = "**Error** Expected ';'", row = currentToken.row });
                 }
@@ -219,11 +235,13 @@ namespace lexer
 
             if (currentToken.lexem == "IF")
             {
+                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                 if (parseconditionalExpression(currentNode))
                 {
                     currentToken = GetNextToken();
                     if (currentToken.lexem == "THEN")
                     {
+                        currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                         if (parseStatementList(currentNode))
                         {
                             return true;
@@ -248,6 +266,7 @@ namespace lexer
                 LexicalAnalizerOutput currentToken = GetNextToken();
                 if (currentToken.lexem == "=")
                 {
+                    currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                     if (parseExpression(currentNode))
                         return true;
                 }
@@ -287,6 +306,7 @@ namespace lexer
             LexicalAnalizerOutput currentToken = GetNextToken();
             if (currentToken.lexem == "ELSE")
             {
+                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                 if (parseStatementList(currentNode))
                     return true;
                 else
@@ -301,18 +321,14 @@ namespace lexer
 
         private bool parseVarDeclarations()
         {
+            SyntaxTree.Node currentNode = program.nodes.Find(x => x.name == nodesTypes.block).AddNode(new SyntaxTree.Node() { name = nodesTypes.var_declar });
+
             LexicalAnalizerOutput currentToken = GetNextToken();
             if (currentToken.lexem == "VAR" && keyWords.Find(x => x.id == currentToken.code) != null)
             {
-                if (program.nodes.Find(x => x.name == nodesTypes.block) != null)
-                {
-                    program.nodes.Find(x => x.name == nodesTypes.block)
-                                 .AddNode(new SyntaxTree.Node() { name = nodesTypes.var_declar });
-                }
+                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
 
-                program.nodes.Find(x => x.name == nodesTypes.block)
-                       .nodes.Find(x => x.name == nodesTypes.var_declar)
-                       .AddNode(new SyntaxTree.Node() { name = nodesTypes.declar_list });
+                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.declar_list });
 
                 if (parseDeclarationList())
                 {
@@ -320,7 +336,6 @@ namespace lexer
                 }
                 else
                 {
-                    errors.Add(new Error { message = "**Error** Expected declaration", row = currentToken.row });
                     return false;
                 }
             }   
@@ -353,16 +368,29 @@ namespace lexer
                 currentToken = GetNextToken();
                 if (currentToken.lexem == ":")
                 {
+                    currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                     string expectedDeclarationType = ParseAttribute();
                     if (expectedDeclarationType != "")
                     {
                         currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.attribute, value = expectedDeclarationType });
-                        identifiersExtended.Add(new IdentifierExt() { name = currentNode.nodes.Find(x => x.name == nodesTypes.var_idn).value, 
-                                                                      typeAttribute = expectedDeclarationType,
-                                                                      type = identifierType.user});
+                        if (!identifiersExtended.Exists(x => x.name == currentNode.nodes.Find(y => y.name == nodesTypes.var_idn).value))
+                        {
+                            identifiersExtended.Add(new IdentifierExt()
+                            {
+                                name = currentNode.nodes.Find(x => x.name == nodesTypes.var_idn).value,
+                                typeAttribute = expectedDeclarationType,
+                                type = identifierType.user
+                            });
+                        }
+                        else
+                        {
+                            errors.Add(new Error { message = "**Error** Variable is already declared ", row = currentToken.row });
+                            return false;
+                        }
                         currentToken = GetNextToken();
                         if (currentToken.lexem == ";")
-                        {    
+                        {
+                            currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem });
                             return true;
                         }
                         else 
