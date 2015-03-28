@@ -17,6 +17,7 @@ namespace lexer
         public Form1()
         {
             InitializeComponent();
+            this.numberedRTBCode.RichTextBox.TextChanged += new System.EventHandler(this.numberedRTBCodeRichTextBoxTextChanged);
             //SerializeTables.SerializeAttributes();
             //SerializeTables.SeriaizeKeyWords();
             //SerializeTables.SeriaizeIdentifiers();
@@ -26,9 +27,11 @@ namespace lexer
             //SerializeTables.DeserializeIdentifiers();
 
             lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
+            programBuilded = false;
         }
 
         LexicalAnalizer lexer;
+        bool programBuilded;
 
         private void ClearScreens()
         {
@@ -114,6 +117,8 @@ namespace lexer
                     Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += message; });
                 }
             }
+
+            programBuilded = true;
         }
         
 
@@ -148,6 +153,8 @@ namespace lexer
         //
         private void numberedRTBCodeRichTextBoxTextChanged(object sender, EventArgs e) // highlight syntax
         {
+            programBuilded = false;
+
             int start = 0;
              // avoid blinking
             Invoke((MethodInvoker)delegate { labelOutput.Focus(); });
@@ -259,6 +266,13 @@ namespace lexer
                 return startIndex + selectionLength;
             }
             return -1;
+        }
+
+        private void syntaxTreeGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form graphForm = new Form();
+            if (programBuilded)
+                graphForm.ShowDialog(); 
         }
     }
 }

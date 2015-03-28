@@ -43,8 +43,10 @@ namespace lexer
             this.labelOutput = new System.Windows.Forms.Label();
             this.richTextBoxOutput = new System.Windows.Forms.RichTextBox();
             this.richTextBoxErrorList = new System.Windows.Forms.RichTextBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.numberedRTBCode = new LineNumbers.NumberedRTB();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.vIEWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.syntaxTreeGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +56,8 @@ namespace lexer
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fILEToolStripMenuItem,
-            this.bUILDToolStripMenuItem});
+            this.bUILDToolStripMenuItem,
+            this.vIEWToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -75,20 +78,20 @@ namespace lexer
             // nEWToolStripMenuItem
             // 
             this.nEWToolStripMenuItem.Name = "nEWToolStripMenuItem";
-            this.nEWToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.nEWToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.nEWToolStripMenuItem.Text = "New";
             // 
             // oPENToolStripMenuItem
             // 
             this.oPENToolStripMenuItem.Name = "oPENToolStripMenuItem";
-            this.oPENToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.oPENToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.oPENToolStripMenuItem.Text = "Open";
             this.oPENToolStripMenuItem.Click += new System.EventHandler(this.oPENToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -191,11 +194,6 @@ namespace lexer
             this.richTextBoxErrorList.TabIndex = 5;
             this.richTextBoxErrorList.Text = "";
             // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "files *.txt|*.txt";
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
-            // 
             // numberedRTBCode
             // 
             this.numberedRTBCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -209,7 +207,26 @@ namespace lexer
             this.tableLayoutPanel1.SetRowSpan(this.numberedRTBCode, 4);
             this.numberedRTBCode.Size = new System.Drawing.Size(493, 483);
             this.numberedRTBCode.TabIndex = 6;
-            this.numberedRTBCode.RichTextBox.TextChanged += new System.EventHandler(this.numberedRTBCodeRichTextBoxTextChanged);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "files *.txt|*.txt";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // vIEWToolStripMenuItem
+            // 
+            this.vIEWToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.syntaxTreeGraphToolStripMenuItem});
+            this.vIEWToolStripMenuItem.Name = "vIEWToolStripMenuItem";
+            this.vIEWToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.vIEWToolStripMenuItem.Text = "VIEW";
+            // 
+            // syntaxTreeGraphToolStripMenuItem
+            // 
+            this.syntaxTreeGraphToolStripMenuItem.Name = "syntaxTreeGraphToolStripMenuItem";
+            this.syntaxTreeGraphToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.syntaxTreeGraphToolStripMenuItem.Text = "Syntax tree graph";
+            this.syntaxTreeGraphToolStripMenuItem.Click += new System.EventHandler(this.syntaxTreeGraphToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -247,6 +264,8 @@ namespace lexer
         private System.Windows.Forms.Label labelErrorList;
         private System.Windows.Forms.RichTextBox richTextBoxErrorList;
         private LineNumbers.NumberedRTB numberedRTBCode;
+        private System.Windows.Forms.ToolStripMenuItem vIEWToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem syntaxTreeGraphToolStripMenuItem;
     }
 }
 
