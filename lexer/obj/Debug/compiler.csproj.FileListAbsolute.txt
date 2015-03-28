@@ -9,3 +9,9 @@ D:\Translator\lexer\lexer\obj\Debug\compiler.csprojResolveAssemblyReference.cach
 D:\Translator\lexer\lexer\obj\Debug\lexer.Form1.resources
 D:\Translator\lexer\lexer\obj\Debug\lexer.Properties.Resources.resources
 D:\Translator\lexer\lexer\obj\Debug\compiler.csproj.GenerateResource.Cache
+D:\Translator\lexer\lexer\bin\Debug\Microsoft.GLEE.dll
+D:\Translator\lexer\lexer\bin\Debug\Microsoft.GLEE.Drawing.dll
+D:\Translator\lexer\lexer\bin\Debug\Microsoft.GLEE.GraphViewerGDI.dll
+D:\Translator\lexer\lexer\bin\Debug\Microsoft.GLEE.pdb
+D:\Translator\lexer\lexer\bin\Debug\Microsoft.GLEE.Drawing.pdb
+D:\Translator\lexer\lexer\bin\Debug\Microsoft.GLEE.GraphViewerGDI.pdb

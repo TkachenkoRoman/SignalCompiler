@@ -271,8 +271,30 @@ namespace lexer
         private void syntaxTreeGraphToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form graphForm = new Form();
+            graphForm.Width = 1280;
+            graphForm.Height = 720;
+
             if (programBuilded)
+            {
+                Microsoft.Glee.GraphViewerGdi.GViewer viewer = new Microsoft.Glee.GraphViewerGdi.GViewer();
+           
+
+                //create a graph object
+                SyntaxTree.XMLNodeToGLEE GleeCreator = new SyntaxTree.XMLNodeToGLEE();
+                Microsoft.Glee.Drawing.Graph graph = GleeCreator.GetGraph();
+
+                
+                //graph.MinNodeWidth = 300;
+
+                viewer.Graph = graph;
+
+                graphForm.SuspendLayout();
+                viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+                graphForm.Controls.Add(viewer);
+                graphForm.ResumeLayout();
+
                 graphForm.ShowDialog(); 
+            }
         }
     }
 }

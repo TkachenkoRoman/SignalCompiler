@@ -36,6 +36,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\LineNumbers\LineNumbers\bin\Debug\LineNumbers.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.GLEE">
+      <HintPath>C:\Program Files (x86)\Microsoft Research\GLEE\bin\Microsoft.GLEE.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.GLEE.Drawing">
+      <HintPath>C:\Program Files (x86)\Microsoft Research\GLEE\bin\Microsoft.GLEE.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.GLEE.GraphViewerGDI">
+      <HintPath>C:\Program Files (x86)\Microsoft Research\GLEE\bin\Microsoft.GLEE.GraphViewerGDI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,6 +79,7 @@
     <Compile Include="SyntaxTree\Link.cs" />
     <Compile Include="SyntaxTree\XMLNode.cs" />
     <Compile Include="SyntaxTree\XMLNodeToDGMLParser.cs" />
+    <Compile Include="SyntaxTree\XMLNodeToGLEE.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
