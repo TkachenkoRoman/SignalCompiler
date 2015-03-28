@@ -12,7 +12,7 @@ namespace lexer.SyntaxTree
         public Graph()
         { }
 
-        public GraphNode[] Nodes;
+        public Node[] Nodes;
         public Link[] Links;
     }
 }

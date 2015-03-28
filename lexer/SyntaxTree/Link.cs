@@ -10,13 +10,13 @@ namespace lexer.SyntaxTree
     public class Link
     {
         [XmlAttribute]
-        public nodesTypes Source;
+        public string Source;
         [XmlAttribute]
-        public nodesTypes Target;
+        public string Target;
         [XmlAttribute]
         public string Label;
 
-        public Link(nodesTypes source, nodesTypes target, string label)
+        public Link(string source, string target, string label = "")
         {
             this.Source = source;
             this.Target = target;

@@ -9,29 +9,21 @@ namespace lexer.SyntaxTree
 {
     public class Node
     {
+        [XmlAttribute]
+        public string Id;
+        [XmlAttribute]
+        public string Value;
+        [XmlAttribute]
+        public string Label;
+
+        public Node(string id, string value = "", string label = "")
+        {
+            this.Id = id;
+            this.Value = value;
+            this.Label = label;
+        }
         public Node()
         {
-            name = nodesTypes.node;
-            value = "empty";
-            nodes = new List<Node>();
-        }
-
-        public Node(nodesTypes name)
-        {
-            this.name = name;
-            value = "empty";
-            nodes = new List<Node>();
-        }
-        [XmlAttribute]
-        public nodesTypes name;
-        [XmlAttribute]
-        public string value;
-        public List<Node> nodes;
-
-        public Node AddNode(Node node)
-        {
-            nodes.Add(node);
-            return node;
         }
     }
 }

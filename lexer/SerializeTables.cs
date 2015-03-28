@@ -165,6 +165,11 @@ namespace lexer
 
         public static void SeriaizeNodeGraph(SyntaxTree.Graph graph)
         {
+            if (File.Exists(SyntaxTreeGraphPath))
+            {
+                File.Delete(SyntaxTreeGraphPath);
+            }
+
             Type graphType = typeof(SyntaxTree.Graph);
             XmlRootAttribute root = new XmlRootAttribute("DirectedGraph");
             root.Namespace = "http://schemas.microsoft.com/vs/2009/dgml";
@@ -175,10 +180,19 @@ namespace lexer
             serializer.Serialize(xmlWriter, graph);
         }
 
-        public static void SeriaizeNode(SyntaxTree.Node node)
+        public static void SeriaizeNode(SyntaxTree.XMLNode node)
         {
             Serialize(node, SyntaxTreePath);
         }
+        public static SyntaxTree.XMLNode DeseriaizeNode()
+        {
+            SyntaxTree.XMLNode XMLNode = new SyntaxTree.XMLNode();
+            object obj = (object)XMLNode;
+            Deserialize(ref obj, SyntaxTreePath);
 
+            Debug.Print("\nSyntaxTree deserialized");
+
+            return (SyntaxTree.XMLNode)obj;
+        }
     }
 }

@@ -66,9 +66,10 @@
     <Compile Include="SerializeTables.cs" />
     <Compile Include="SyntaxAnalizer.cs" />
     <Compile Include="SyntaxTree\Graph.cs" />
-    <Compile Include="SyntaxTree\GraphNode.cs" />
-    <Compile Include="SyntaxTree\Link.cs" />
     <Compile Include="SyntaxTree\Node.cs" />
+    <Compile Include="SyntaxTree\Link.cs" />
+    <Compile Include="SyntaxTree\XMLNode.cs" />
+    <Compile Include="SyntaxTree\XMLNodeToDGMLParser.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
