@@ -287,7 +287,7 @@ namespace lexer
     } 
 }
 
-struct LexicalAnalizerOutput
+public struct LexicalAnalizerOutput
 {
     public int code;
     public string lexem;

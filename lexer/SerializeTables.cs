@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using System.IO;
+using System.Xml;
 
 namespace lexer
 {
@@ -16,6 +17,7 @@ namespace lexer
         private static string attributesTablePath = path + @"\AttributesTable.xml";
         private static string keyWordsTablePath = path + @"\KeyWordsTable.xml";
         private static string identifiersTablePath = path + @"\IdentifiersTable.xml";
+        private static string SyntaxTreeGraphPath = path + @"\SyntaxTreeGraph.dgml";
         private static string SyntaxTreePath = path + @"\SyntaxTree.xml";
         private static void Serialize(object obj, string path)
         {
@@ -159,6 +161,18 @@ namespace lexer
             }
 
             return (List<Identifier>)obj;
+        }
+
+        public static void SeriaizeNodeGraph(SyntaxTree.Graph graph)
+        {
+            Type graphType = typeof(SyntaxTree.Graph);
+            XmlRootAttribute root = new XmlRootAttribute("DirectedGraph");
+            root.Namespace = "http://schemas.microsoft.com/vs/2009/dgml";
+            XmlSerializer serializer = new XmlSerializer(graphType, root);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            XmlWriter xmlWriter = XmlWriter.Create(SyntaxTreeGraphPath, settings);
+            serializer.Serialize(xmlWriter, graph);
         }
 
         public static void SeriaizeNode(SyntaxTree.Node node)

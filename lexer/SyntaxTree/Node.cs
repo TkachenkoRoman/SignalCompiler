@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace lexer.SyntaxTree
 {
@@ -21,8 +22,9 @@ namespace lexer.SyntaxTree
             value = "empty";
             nodes = new List<Node>();
         }
-
+        [XmlAttribute]
         public nodesTypes name;
+        [XmlAttribute]
         public string value;
         public List<Node> nodes;
 

@@ -36,8 +36,14 @@ namespace lexer
             this.identifiers = identifiers;
             this.identifiersExtended = new List<IdentifierExt>();
             this.keyWords = keyWords;
+            graphNodes = new List<SyntaxTree.GraphNode>();
+            links = new List<SyntaxTree.Link>();
+
             program = new SyntaxTree.Node(nodesTypes.program);
+            graphNodes.Add(new SyntaxTree.GraphNode(nodesTypes.program, "empty"));
             positionInLexems = -1;
+
+            
         }
 
         private List<Error> errors;
@@ -51,6 +57,19 @@ namespace lexer
 
         public delegate void WorkDoneHandler(List<Error> errors);
         public event WorkDoneHandler WorkDone;
+
+        private List<SyntaxTree.GraphNode> graphNodes;
+        private List<SyntaxTree.Link> links;
+
+        private void addGraphNode(SyntaxTree.GraphNode g)
+        {
+            graphNodes.Add(g);
+        }
+
+        private void addLink(SyntaxTree.Link l)
+        {
+            links.Add(l);
+        }
 
         private LexicalAnalizerOutput GetNextToken()
         {
@@ -68,6 +87,10 @@ namespace lexer
             if (currentToken.lexem == "PROGRAM")
             {
                 currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.token, value = currentToken.lexem});
+
+                addGraphNode(new SyntaxTree.GraphNode(nodesTypes.token, currentToken.lexem));
+                addLink(new SyntaxTree.Link(nodesTypes.program, nodesTypes.token, ""));
+
                 if (ParseProcedureIdn())
                 {
                     currentToken = GetNextToken();
@@ -107,27 +130,28 @@ namespace lexer
 
         private bool ParseProcedureIdn()
         {
-            string identifier = ParseIdentifier();
-            if (identifier != "")
+            LexicalAnalizerOutput identifier = ParseIdentifier();
+            if (identifier.lexem != "")
             {
-                program.AddNode(new SyntaxTree.Node() { name = nodesTypes.procedure_idn, value = identifier });
+                program.AddNode(new SyntaxTree.Node() { name = nodesTypes.procedure_idn, value = identifier.lexem });
                 return true;
             }
             else
             {
+                errors.Add(new Error { message = "**Error** Expected user identifier", row = identifier.row });
                 return false;
             }
         }
 
-        private string ParseIdentifier() // return empty string if not parsed else return value
+        private LexicalAnalizerOutput ParseIdentifier() // return empty string if not parsed else return value
         {
             LexicalAnalizerOutput currentToken = GetNextToken();
             if (identifiers.Find(x => x.id == currentToken.code && x.type != identifierType.system) != null)
-                return currentToken.lexem;
+                return currentToken;
             else
             {
-                errors.Add(new Error { message = "**Error** Expected user identifier", row = currentToken.row });
-                return "";
+                //errors.Add(new Error { message = "**Error** Expected user identifier", row = currentToken.row });
+                return new LexicalAnalizerOutput() { lexem = "" };
             }
         }
 
@@ -417,15 +441,15 @@ namespace lexer
 
         private SyntaxTree.Node ParseVarIdn()
         {
-            string identifier = ParseIdentifier();
-            if (identifier != "")
+            LexicalAnalizerOutput identifier = ParseIdentifier();
+            if (identifier.lexem != "")
             {
                 SyntaxTree.Node currentNode = program.nodes.Find(x => x.name == nodesTypes.block)
                                                  .nodes.Find(x => x.name == nodesTypes.var_declar)
                                                  .nodes.Find(x => x.name == nodesTypes.declar_list)
                                                  .AddNode(new SyntaxTree.Node() { name = nodesTypes.declaration });
 
-                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.var_idn, value = identifier});
+                currentNode.AddNode(new SyntaxTree.Node() { name = nodesTypes.var_idn, value = identifier.lexem});
                 return currentNode;
             }
             else
@@ -438,6 +462,11 @@ namespace lexer
         {
             ParseProgram();
             SerializeTables.SeriaizeNode(program);
+            SyntaxTree.Graph graph = new SyntaxTree.Graph();
+            graph.Nodes = graphNodes.ToArray();
+            graph.Links = links.ToArray();
+            SerializeTables.SeriaizeNode(program);
+            SerializeTables.SeriaizeNodeGraph(graph);
             if (WorkDone != null) WorkDone(errors);
         }
     }
