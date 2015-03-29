@@ -55,7 +55,7 @@ namespace lexer
         private int positionInLexems; // current pos in lexems
         private List<IdentifierExt> identifiersExtended;
 
-        public delegate void WorkDoneHandler(List<Error> errors);
+        public delegate void WorkDoneHandler(List<Error> errors, List<IdentifierExt> identifiersExt);
         public event WorkDoneHandler WorkDone;
 
         private List<SyntaxTree.Node> graphNodes;
@@ -487,7 +487,7 @@ namespace lexer
             SyntaxTree.Graph graph = parser.GetGraph();
             
             SerializeTables.SeriaizeNodeGraph(graph);
-            if (WorkDone != null) WorkDone(errors);
+            if (WorkDone != null) WorkDone(errors, identifiersExtended);
         }
     }
 }

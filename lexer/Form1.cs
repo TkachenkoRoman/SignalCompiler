@@ -105,11 +105,22 @@ namespace lexer
         }
 
 
-        private void SyntaxerWorkDone(List<Error> errors)
-        {
-            Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += "\n\nSyntax errors:\n"; });
+        private void SyntaxerWorkDone(List<Error> errors, List<IdentifierExt> identifiersExt) 
+        {          
+            if (identifiersExt.Count() > 0)
+            {
+                Invoke((MethodInvoker)delegate { this.richTextBoxOutput.Text += "\nIdentifiers extended table:\n"; });
+                foreach (var item in identifiersExt)
+                {
+                    string message = String.Format(String.Format("name: {0}\t\ttype: {1}\n", item.name, item.typeAttribute));
+                    Debug.Print(message);
+                    Invoke((MethodInvoker)delegate { this.richTextBoxOutput.Text += message; });
+                }
+            }
+            
             if (errors.Count() > 0)
             {
+                Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += "\n\nSyntax errors:\n"; });
                 foreach (var item in errors)
                 {
                     string message = String.Format(item.message + " in row {0}\n", item.row.ToString());
@@ -117,6 +128,7 @@ namespace lexer
                     Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += message; });
                 }
             }
+            
 
             programBuilded = true;
         }
@@ -283,7 +295,13 @@ namespace lexer
                 SyntaxTree.XMLNodeToGLEE GleeCreator = new SyntaxTree.XMLNodeToGLEE();
                 Microsoft.Glee.Drawing.Graph graph = GleeCreator.GetGraph();
 
+                System.Windows.Forms.Layout.LayoutEngine layout = viewer.LayoutEngine;
+                graph.GraphAttr.OptimizeLabelPositions = false;
+                graph.GraphAttr.LayerDirection = Microsoft.Glee.Drawing.LayerDirection.TB;
+                graph.GraphAttr.LabelFloat = (Microsoft.Glee.Drawing.LabelFloat)1;
                 
+
+                //graph.GraphAttr.AspectRatio = 5.0;
                 //graph.MinNodeWidth = 300;
 
                 viewer.Graph = graph;

@@ -11,16 +11,14 @@ namespace lexer.SyntaxTree
         public XMLNodeToGLEE()
         {
             XMLSyntaxTree = SerializeTables.DeseriaizeNode();
-            nodes = new List<Node>();
-            links = new List<Link>();
             graph = new Microsoft.Glee.Drawing.Graph("graph");
             graph.AddNode(XMLSyntaxTree.Id);
             graph.FindNode(XMLSyntaxTree.Id).Attr.Label = XMLSyntaxTree.name.ToString();
             graph.FindNode(XMLSyntaxTree.Id).Attr.Fillcolor = Microsoft.Glee.Drawing.Color.Salmon;
         }
         private XMLNode XMLSyntaxTree;
-        private List<Node> nodes;
-        private List<Link> links;
+        private List<Microsoft.Glee.Drawing.Node> nodes;
+
         Microsoft.Glee.Drawing.Graph graph;
         private void ParseNode(XMLNode parentNode)
         {
@@ -37,8 +35,9 @@ namespace lexer.SyntaxTree
                 n.Attr.Label = label;
                 n.Attr.Fillcolor = Microsoft.Glee.Drawing.Color.LightSkyBlue;
 
+
                 Microsoft.Glee.Drawing.Edge edge = graph.AddEdge(parentNode.Id, item.Id);
-                //edge.Attr.Weight = 0;
+                edge.Attr.Weight = Convert.ToInt32(item.Id);
                 
                 //if (parentNode.nodes.Exists(x => Convert.ToInt32(x.Id) > Convert.ToInt32(item.Id)))
                 //    graph.AddEdge(item.Id, parentNode.nodes.First(x => Convert.ToInt32(x.Id) > Convert.ToInt32(item.Id)).Id);

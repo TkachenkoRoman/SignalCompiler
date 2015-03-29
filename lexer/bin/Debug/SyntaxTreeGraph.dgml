@@ -1,158 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="0" Value="" Label="program" />
-    <Node Id="1" Value="PROGRAM" Label="token: PROGRAM" />
-    <Node Id="2" Value="HELLOWORLD" Label="procedure_idn: HELLOWORLD" />
-    <Node Id="3" Value=";" Label="token: ;" />
-    <Node Id="4" Value="" Label="block" />
-    <Node Id="5" Value="" Label="var_declar" />
-    <Node Id="6" Value="VAR" Label="token: VAR" />
-    <Node Id="7" Value="" Label="declar_list" />
-    <Node Id="8" Value="" Label="declaration" />
-    <Node Id="9" Value="FIRST" Label="var_idn: FIRST" />
-    <Node Id="10" Value=":" Label="token: :" />
-    <Node Id="11" Value="INTEGER" Label="attribute: INTEGER" />
-    <Node Id="12" Value=";" Label="token: ;" />
-    <Node Id="13" Value="" Label="declaration" />
-    <Node Id="14" Value="SECOND" Label="var_idn: SECOND" />
-    <Node Id="15" Value=":" Label="token: :" />
-    <Node Id="16" Value="FLOAT" Label="attribute: FLOAT" />
-    <Node Id="17" Value=";" Label="token: ;" />
-    <Node Id="18" Value="" Label="declaration" />
-    <Node Id="19" Value="THIRD" Label="var_idn: THIRD" />
-    <Node Id="20" Value=":" Label="token: :" />
-    <Node Id="21" Value="INTEGER" Label="attribute: INTEGER" />
-    <Node Id="22" Value=";" Label="token: ;" />
-    <Node Id="23" Value="BEGIN" Label="token: BEGIN" />
-    <Node Id="24" Value="" Label="statement_list" />
-    <Node Id="25" Value="" Label="statement" />
-    <Node Id="26" Value="" Label="conditional_statement" />
-    <Node Id="27" Value="" Label="incomplete_conditional_statement" />
-    <Node Id="28" Value="IF" Label="token: IF" />
-    <Node Id="29" Value="" Label="conditional_expression" />
-    <Node Id="30" Value="FIRST" Label="expression: FIRST" />
-    <Node Id="31" Value="=" Label="token: =" />
-    <Node Id="32" Value="1" Label="expression: 1" />
-    <Node Id="33" Value="THEN" Label="token: THEN" />
-    <Node Id="34" Value="" Label="statement_list" />
-    <Node Id="35" Value="" Label="statement" />
-    <Node Id="36" Value="" Label="conditional_statement" />
-    <Node Id="37" Value="" Label="incomplete_conditional_statement" />
-    <Node Id="38" Value="IF" Label="token: IF" />
-    <Node Id="39" Value="" Label="conditional_expression" />
-    <Node Id="40" Value="SECOND" Label="expression: SECOND" />
-    <Node Id="41" Value="=" Label="token: =" />
-    <Node Id="42" Value="THIRD" Label="expression: THIRD" />
-    <Node Id="43" Value="THEN" Label="token: THEN" />
-    <Node Id="49" Value="ENDIF" Label="token: ENDIF" />
-    <Node Id="50" Value=";" Label="token: ;" />
-    <Node Id="55" Value="" Label="alternative_part" />
-    <Node Id="56" Value="ELSE" Label="token: ELSE" />
-    <Node Id="57" Value="" Label="statement_list" />
-    <Node Id="58" Value="" Label="statement" />
-    <Node Id="59" Value="" Label="conditional_statement" />
-    <Node Id="60" Value="" Label="incomplete_conditional_statement" />
-    <Node Id="61" Value="IF" Label="token: IF" />
-    <Node Id="62" Value="" Label="conditional_expression" />
-    <Node Id="63" Value="SECOND" Label="expression: SECOND" />
-    <Node Id="64" Value="=" Label="token: =" />
-    <Node Id="65" Value="FIRST" Label="expression: FIRST" />
-    <Node Id="66" Value="THEN" Label="token: THEN" />
-    <Node Id="72" Value="ENDIF" Label="token: ENDIF" />
-    <Node Id="73" Value=";" Label="token: ;" />
-    <Node Id="78" Value="ENDIF" Label="token: ENDIF" />
-    <Node Id="79" Value=";" Label="token: ;" />
-    <Node Id="80" Value="" Label="statement_list" />
-    <Node Id="81" Value="" Label="statement" />
-    <Node Id="82" Value="" Label="conditional_statement" />
-    <Node Id="83" Value="" Label="incomplete_conditional_statement" />
-    <Node Id="84" Value="IF" Label="token: IF" />
-    <Node Id="85" Value="" Label="conditional_expression" />
-    <Node Id="86" Value="FIRST" Label="expression: FIRST" />
-    <Node Id="87" Value="=" Label="token: =" />
-    <Node Id="88" Value="1" Label="expression: 1" />
-    <Node Id="89" Value="THEN" Label="token: THEN" />
-    <Node Id="95" Value="ENDIF" Label="token: ENDIF" />
-    <Node Id="96" Value=";" Label="token: ;" />
-    <Node Id="101" Value="END" Label="token: END" />
-    <Node Id="102" Value="." Label="token: ." />
+    <Node Id="516" Value="" Label="program" />
+    <Node Id="517" Value="PROGRAM" Label="token: PROGRAM" />
+    <Node Id="518" Value="HELLOWORLD" Label="procedure_idn: HELLOWORLD" />
+    <Node Id="519" Value=";" Label="token: ;" />
+    <Node Id="520" Value="" Label="block" />
+    <Node Id="521" Value="" Label="var_declar" />
+    <Node Id="522" Value="VAR" Label="token: VAR" />
+    <Node Id="523" Value="" Label="declar_list" />
+    <Node Id="524" Value="" Label="declaration" />
+    <Node Id="525" Value="FIRST" Label="var_idn: FIRST" />
+    <Node Id="526" Value=":" Label="token: :" />
+    <Node Id="527" Value="INTEGER" Label="attribute: INTEGER" />
+    <Node Id="528" Value=";" Label="token: ;" />
+    <Node Id="529" Value="BEGIN" Label="token: BEGIN" />
+    <Node Id="530" Value="" Label="statement_list" />
+    <Node Id="531" Value="" Label="statement" />
+    <Node Id="532" Value="" Label="conditional_statement" />
+    <Node Id="533" Value="" Label="incomplete_conditional_statement" />
+    <Node Id="534" Value="IF" Label="token: IF" />
+    <Node Id="535" Value="" Label="conditional_expression" />
+    <Node Id="536" Value="FIRST" Label="expression: FIRST" />
+    <Node Id="537" Value="=" Label="token: =" />
+    <Node Id="538" Value="1" Label="expression: 1" />
+    <Node Id="539" Value="THEN" Label="token: THEN" />
+    <Node Id="545" Value="ENDIF" Label="token: ENDIF" />
+    <Node Id="546" Value=";" Label="token: ;" />
+    <Node Id="551" Value="END" Label="token: END" />
+    <Node Id="552" Value="." Label="token: ." />
   </Nodes>
   <Links>
-    <Link Source="0" Target="1" />
-    <Link Source="0" Target="2" />
-    <Link Source="0" Target="3" />
-    <Link Source="0" Target="4" />
-    <Link Source="4" Target="5" />
-    <Link Source="5" Target="6" />
-    <Link Source="5" Target="7" />
-    <Link Source="7" Target="8" />
-    <Link Source="8" Target="9" />
-    <Link Source="8" Target="10" />
-    <Link Source="8" Target="11" />
-    <Link Source="8" Target="12" />
-    <Link Source="7" Target="13" />
-    <Link Source="13" Target="14" />
-    <Link Source="13" Target="15" />
-    <Link Source="13" Target="16" />
-    <Link Source="13" Target="17" />
-    <Link Source="7" Target="18" />
-    <Link Source="18" Target="19" />
-    <Link Source="18" Target="20" />
-    <Link Source="18" Target="21" />
-    <Link Source="18" Target="22" />
-    <Link Source="4" Target="23" />
-    <Link Source="4" Target="24" />
-    <Link Source="24" Target="25" />
-    <Link Source="25" Target="26" />
-    <Link Source="26" Target="27" />
-    <Link Source="27" Target="28" />
-    <Link Source="27" Target="29" />
-    <Link Source="29" Target="30" />
-    <Link Source="29" Target="31" />
-    <Link Source="29" Target="32" />
-    <Link Source="27" Target="33" />
-    <Link Source="27" Target="34" />
-    <Link Source="34" Target="35" />
-    <Link Source="35" Target="36" />
-    <Link Source="36" Target="37" />
-    <Link Source="37" Target="38" />
-    <Link Source="37" Target="39" />
-    <Link Source="39" Target="40" />
-    <Link Source="39" Target="41" />
-    <Link Source="39" Target="42" />
-    <Link Source="37" Target="43" />
-    <Link Source="35" Target="49" />
-    <Link Source="35" Target="50" />
-    <Link Source="26" Target="55" />
-    <Link Source="55" Target="56" />
-    <Link Source="55" Target="57" />
-    <Link Source="57" Target="58" />
-    <Link Source="58" Target="59" />
-    <Link Source="59" Target="60" />
-    <Link Source="60" Target="61" />
-    <Link Source="60" Target="62" />
-    <Link Source="62" Target="63" />
-    <Link Source="62" Target="64" />
-    <Link Source="62" Target="65" />
-    <Link Source="60" Target="66" />
-    <Link Source="58" Target="72" />
-    <Link Source="58" Target="73" />
-    <Link Source="25" Target="78" />
-    <Link Source="25" Target="79" />
-    <Link Source="4" Target="80" />
-    <Link Source="80" Target="81" />
-    <Link Source="81" Target="82" />
-    <Link Source="82" Target="83" />
-    <Link Source="83" Target="84" />
-    <Link Source="83" Target="85" />
-    <Link Source="85" Target="86" />
-    <Link Source="85" Target="87" />
-    <Link Source="85" Target="88" />
-    <Link Source="83" Target="89" />
-    <Link Source="81" Target="95" />
-    <Link Source="81" Target="96" />
-    <Link Source="4" Target="101" />
-    <Link Source="0" Target="102" />
+    <Link Source="516" Target="517" />
+    <Link Source="516" Target="518" />
+    <Link Source="516" Target="519" />
+    <Link Source="516" Target="520" />
+    <Link Source="520" Target="521" />
+    <Link Source="521" Target="522" />
+    <Link Source="521" Target="523" />
+    <Link Source="523" Target="524" />
+    <Link Source="524" Target="525" />
+    <Link Source="524" Target="526" />
+    <Link Source="524" Target="527" />
+    <Link Source="524" Target="528" />
+    <Link Source="520" Target="529" />
+    <Link Source="520" Target="530" />
+    <Link Source="530" Target="531" />
+    <Link Source="531" Target="532" />
+    <Link Source="532" Target="533" />
+    <Link Source="533" Target="534" />
+    <Link Source="533" Target="535" />
+    <Link Source="535" Target="536" />
+    <Link Source="535" Target="537" />
+    <Link Source="535" Target="538" />
+    <Link Source="533" Target="539" />
+    <Link Source="531" Target="545" />
+    <Link Source="531" Target="546" />
+    <Link Source="520" Target="551" />
+    <Link Source="516" Target="552" />
   </Links>
 </DirectedGraph>
