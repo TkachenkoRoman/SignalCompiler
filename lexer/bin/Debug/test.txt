@@ -1,13 +1,6 @@
 PROGRAM HELLOWORLD; (* valid comment *)
 VAR FIRST : INTEGER;
-    SECOND : FLOAT;
-    THIRD : INTEGER; 
+    BEGI: END; 
 BEGIN 
-  
-IF FIRST = 1 THEN 
-     IF SECOND = THIRD 
-     THEN ENDIF;
-ELSE IF SECOND = FIRST THEN ENDIF;
-ENDIF;
 IF FIRST = 1 THEN ENDIF;
-END.	        
+END.	                

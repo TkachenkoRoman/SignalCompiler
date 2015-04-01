@@ -189,6 +189,8 @@ namespace lexer
                     // continue parsing statementList
                     if (parseStatementList(program.nodes.Find(x => x.name == nodesTypes.block)))
                     {
+                        positionInLexems--;
+                        int curr_row = GetNextToken().row;
                         currentToken = GetNextToken();
                         if (currentToken.lexem == "END")
                         {
@@ -197,7 +199,9 @@ namespace lexer
                         }
                         else
                         {
-                            errors.Add(new Error { message = "**Error** END or statement expected", row = currentToken.row });
+                            if (currentToken.row != -1)
+                                curr_row = currentToken.row;
+                            errors.Add(new Error { message = "**Error** END or statement expected", row = curr_row });
                         }
                     }
                     else
