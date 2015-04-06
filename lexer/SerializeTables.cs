@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
+using System.Threading;
 
 namespace lexer
 {
@@ -19,21 +20,27 @@ namespace lexer
         private static string identifiersTablePath = path + @"\IdentifiersTable.xml";
         private static string SyntaxTreeGraphPath = path + @"\SyntaxTreeGraph.dgml";
         private static string SyntaxTreePath = path + @"\SyntaxTree.xml";
+        private static Mutex mutexForSerializedFiles = new Mutex();
         private static void Serialize(object obj, string path)
         {
+            mutexForSerializedFiles.WaitOne();
             Type objectType = obj.GetType();
             XmlSerializer writer = new XmlSerializer(objectType);
             StreamWriter file = new StreamWriter(path);
             writer.Serialize(file, obj);
             file.Close();
+            mutexForSerializedFiles.ReleaseMutex();
         }
 
         private static void Deserialize(ref object obj, string path)
         {
+            mutexForSerializedFiles.WaitOne();
             Type objectType = obj.GetType();
             XmlSerializer reader = new XmlSerializer(objectType);
             StreamReader file = new StreamReader(path);
             obj = reader.Deserialize(file);
+            file.Close();
+            mutexForSerializedFiles.ReleaseMutex();
         }
         
         private static char[] GenerateCharArray(char start, char fin)
@@ -165,10 +172,7 @@ namespace lexer
 
         public static void SeriaizeNodeGraph(SyntaxTree.Graph graph)
         {
-            if (File.Exists(SyntaxTreeGraphPath))
-            {
-                File.Delete(SyntaxTreeGraphPath);
-            }
+            mutexForSerializedFiles.WaitOne();
 
             Type graphType = typeof(SyntaxTree.Graph);
             XmlRootAttribute root = new XmlRootAttribute("DirectedGraph");
@@ -178,6 +182,8 @@ namespace lexer
             settings.Indent = true;
             XmlWriter xmlWriter = XmlWriter.Create(SyntaxTreeGraphPath, settings);
             serializer.Serialize(xmlWriter, graph);
+            xmlWriter.Dispose();
+            mutexForSerializedFiles.ReleaseMutex();
         }
 
         public static void SeriaizeNode(SyntaxTree.XMLNode node)
