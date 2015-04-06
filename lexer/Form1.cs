@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using lexer.AsmCodeGenerator;
 
 namespace lexer
 {
@@ -28,10 +29,12 @@ namespace lexer
 
             lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
             programBuilded = false;
+            errorsFound = false;
         }
 
         LexicalAnalizer lexer;
         bool programBuilded;
+        bool errorsFound; // if true, dont start code generation
 
         private void ClearScreens()
         {
@@ -75,10 +78,7 @@ namespace lexer
                     Debug.Print(message);
                     Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += message; }); 
                 }
-            }
-            else
-            {
-                Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += "Build succeeded"; }); 
+                errorsFound = true;
             }
 
             Invoke((MethodInvoker)delegate { richTextBoxOutput.Text += "\n\nConstants:\n"; });
@@ -127,23 +127,39 @@ namespace lexer
                     Debug.Print(message);
                     Invoke((MethodInvoker)delegate { richTextBoxErrorList.Text += message; });
                 }
+                errorsFound = true;
             }
-            
-
             programBuilded = true;
+
+            if(!errorsFound)
+            {
+                AssemblerCodeGenerator codeGenerator = new AssemblerCodeGenerator();
+                codeGenerator.WorkDone += codeGeneratorWorkDone;
+                Thread generatorThread = new Thread(new ThreadStart(codeGenerator.GenerateCode));
+
+                generatorThread.Start();
+            }
         }
         
-
+        private void codeGeneratorWorkDone(string output)
+        {
+            if (output.Length > 0)
+            {
+                Invoke((MethodInvoker)delegate { this.richTextBoxOutput.Text += "\nAsm code:\n"; });
+                Invoke((MethodInvoker)delegate { this.richTextBoxOutput.Text += output; });
+            }
+        }
 
         private void buildSolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            errorsFound = false; // clear errors
+
             //string path = System.IO.Directory.GetCurrentDirectory() + @"\test.txt";
             lexer = new LexicalAnalizer(numberedRTBCode.RichTextBox.Lines);
             lexer.WorkDone += LexerWorkDone;
             Thread lexerThread = new Thread(new ThreadStart(lexer.Analize));
 
             lexerThread.Start();
-
             
         }
 

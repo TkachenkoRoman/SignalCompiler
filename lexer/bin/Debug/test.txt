@@ -1,6 +1,6 @@
 PROGRAM HELLOWORLD; (* valid comment *)
 VAR FIRST : INTEGER;
-    BEGI: END; 
+    SECOND : FLOAT; 
 BEGIN 
 IF FIRST = 1 THEN ENDIF;
 END.	                

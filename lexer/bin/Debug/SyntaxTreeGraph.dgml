@@ -1,38 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="891" Value="" Label="program" />
-    <Node Id="892" Value="PROGRAM" Label="token: PROGRAM" />
-    <Node Id="893" Value="HELLOWORLD" Label="procedure_idn: HELLOWORLD" />
-    <Node Id="894" Value=";" Label="token: ;" />
-    <Node Id="895" Value="" Label="block" />
-    <Node Id="896" Value="" Label="var_declar" />
-    <Node Id="897" Value="VAR" Label="token: VAR" />
-    <Node Id="898" Value="" Label="declar_list" />
-    <Node Id="899" Value="" Label="declaration" />
-    <Node Id="900" Value="FIRST" Label="var_idn: FIRST" />
-    <Node Id="901" Value=":" Label="token: :" />
-    <Node Id="902" Value="INTEGER" Label="attribute: INTEGER" />
-    <Node Id="903" Value=";" Label="token: ;" />
-    <Node Id="904" Value="" Label="declaration" />
-    <Node Id="905" Value="BEGI" Label="var_idn: BEGI" />
-    <Node Id="906" Value=":" Label="token: :" />
+    <Node Id="0" Value="" Label="program" />
+    <Node Id="1" Value="PROGRAM" Label="token: PROGRAM" />
+    <Node Id="2" Value="HELLOWORLD" Label="procedure_idn: HELLOWORLD" />
+    <Node Id="3" Value=";" Label="token: ;" />
+    <Node Id="4" Value="" Label="block" />
+    <Node Id="5" Value="" Label="var_declar" />
+    <Node Id="6" Value="VAR" Label="token: VAR" />
+    <Node Id="7" Value="" Label="declar_list" />
+    <Node Id="8" Value="" Label="declaration" />
+    <Node Id="9" Value="FIRST" Label="var_idn: FIRST" />
+    <Node Id="10" Value=":" Label="token: :" />
+    <Node Id="11" Value="INTEGER" Label="attribute: INTEGER" />
+    <Node Id="12" Value=";" Label="token: ;" />
+    <Node Id="13" Value="" Label="declaration" />
+    <Node Id="14" Value="SECOND" Label="var_idn: SECOND" />
+    <Node Id="15" Value=":" Label="token: :" />
+    <Node Id="16" Value="FLOAT" Label="attribute: FLOAT" />
+    <Node Id="17" Value=";" Label="token: ;" />
+    <Node Id="18" Value="BEGIN" Label="token: BEGIN" />
+    <Node Id="19" Value="" Label="statement_list" />
+    <Node Id="20" Value="" Label="statement" />
+    <Node Id="21" Value="" Label="conditional_statement" />
+    <Node Id="22" Value="" Label="incomplete_conditional_statement" />
+    <Node Id="23" Value="IF" Label="token: IF" />
+    <Node Id="24" Value="" Label="conditional_expression" />
+    <Node Id="25" Value="FIRST" Label="expression: FIRST" />
+    <Node Id="26" Value="=" Label="token: =" />
+    <Node Id="27" Value="1" Label="expression: 1" />
+    <Node Id="28" Value="THEN" Label="token: THEN" />
+    <Node Id="34" Value="ENDIF" Label="token: ENDIF" />
+    <Node Id="35" Value=";" Label="token: ;" />
+    <Node Id="40" Value="END" Label="token: END" />
+    <Node Id="41" Value="." Label="token: ." />
   </Nodes>
   <Links>
-    <Link Source="891" Target="892" />
-    <Link Source="891" Target="893" />
-    <Link Source="891" Target="894" />
-    <Link Source="891" Target="895" />
-    <Link Source="895" Target="896" />
-    <Link Source="896" Target="897" />
-    <Link Source="896" Target="898" />
-    <Link Source="898" Target="899" />
-    <Link Source="899" Target="900" />
-    <Link Source="899" Target="901" />
-    <Link Source="899" Target="902" />
-    <Link Source="899" Target="903" />
-    <Link Source="898" Target="904" />
-    <Link Source="904" Target="905" />
-    <Link Source="904" Target="906" />
+    <Link Source="0" Target="1" />
+    <Link Source="0" Target="2" />
+    <Link Source="0" Target="3" />
+    <Link Source="0" Target="4" />
+    <Link Source="4" Target="5" />
+    <Link Source="5" Target="6" />
+    <Link Source="5" Target="7" />
+    <Link Source="7" Target="8" />
+    <Link Source="8" Target="9" />
+    <Link Source="8" Target="10" />
+    <Link Source="8" Target="11" />
+    <Link Source="8" Target="12" />
+    <Link Source="7" Target="13" />
+    <Link Source="13" Target="14" />
+    <Link Source="13" Target="15" />
+    <Link Source="13" Target="16" />
+    <Link Source="13" Target="17" />
+    <Link Source="4" Target="18" />
+    <Link Source="4" Target="19" />
+    <Link Source="19" Target="20" />
+    <Link Source="20" Target="21" />
+    <Link Source="21" Target="22" />
+    <Link Source="22" Target="23" />
+    <Link Source="22" Target="24" />
+    <Link Source="24" Target="25" />
+    <Link Source="24" Target="26" />
+    <Link Source="24" Target="27" />
+    <Link Source="22" Target="28" />
+    <Link Source="20" Target="34" />
+    <Link Source="20" Target="35" />
+    <Link Source="4" Target="40" />
+    <Link Source="0" Target="41" />
   </Links>
 </DirectedGraph>

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsmCodeGenerator\AssemblerCodeGenerator.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Error.cs" />
