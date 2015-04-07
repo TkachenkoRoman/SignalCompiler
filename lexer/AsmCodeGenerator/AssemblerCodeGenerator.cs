@@ -36,7 +36,7 @@ namespace lexer.AsmCodeGenerator
 
         private void WriteHeader(string idn)
         {
-            string header = ".8086\n.MODEL\tsmall\n.STACK\t256\n";
+            string header = ".386\n.MODEL\tsmall\n.STACK\t256\n";
             string codeSeg = String.Format(".CODE\n{0}\tPROC\n", idn);
             string endProg = String.Format("mov\tah,4Ch\nmov\tal,0\nint\t21h\n{0}\tENDP\nEND\t{0}", idn);
             resultAsmCode = resultAsmCode.Insert(posInResultAsmCode, header); // insert header
@@ -67,7 +67,7 @@ namespace lexer.AsmCodeGenerator
         {
             var operands = expressions.ToArray();
             string label = generateLabel();
-            string condition = String.Format("mov\tax, {0}\nmov\tbx, {1}\ncmp\tax, bx\njne\t{2}\n", operands[0].value, operands[1].value, label);
+            string condition = String.Format("mov\teax, {0}\nmov\tebx, {1}\ncmp\teax, ebx\njne\t{2}\n", operands[0].value, operands[1].value, label);
             resultAsmCode = resultAsmCode.Insert(codeSegmentPos, condition);
             codeSegmentPos += condition.Length;
             return label;

@@ -148,6 +148,12 @@ namespace lexer
                 Invoke((MethodInvoker)delegate { this.richTextBoxOutput.Text += "\nAsm code:\n"; });
                 Invoke((MethodInvoker)delegate { this.richTextBoxOutput.Text += output; });
             }
+            string path = System.IO.Directory.GetCurrentDirectory();
+            path += @"\Listing.asm";
+            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path)) //write result to file
+            {
+                writer.Write(output);
+            }
         }
 
         private void buildSolutionToolStripMenuItem_Click(object sender, EventArgs e)
